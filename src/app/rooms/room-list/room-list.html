@@ -1,0 +1,19 @@
+<div class="rooms-grid">
+@for (room of rooms(); track room.id) {
+  <article class="room-card">
+    <div class="room-card__image">
+      <img [src]="room.imageUrls[0] || 'https://placehold.co/400x300'" [alt]="room.description" />
+      <p class="room-card__stars">★★★★★</p>
+    </div>
+    <div class="room-card__body">
+        <h2>{{ room.title }}</h2>
+        <p>{{ room.maxGuests }} huéspedes</p>
+        <p class="room-card__price">${{ room.priceAmount }} por noche</p>
+        <button class="btn-detalle">Ver Detalle</button>
+    </div>
+    
+  </article>
+} @empty {
+  <p>No hay habitaciones</p>
+}
+</div>
