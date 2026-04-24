@@ -99,6 +99,9 @@
 /* MAYOR O IGUAL DE 768PX (A PARTIR DE 768PX INCLUSIVE) - SMARTPHONES GRANDES, TABLETS */
 @media only screen and (min-width:768px){
 
+    .rooms-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
    
 
 
@@ -109,7 +112,9 @@
 /* MAYOR O IGUAL DE 992PX (A PARTIR DE 992PX INCLUSIVE) - PC PEQUEÑOS, LAPTOPS */
 @media only screen and (min-width:992px){
 
-
+    .rooms-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
   
 
 }
@@ -117,7 +122,9 @@
 /* MAYOR O IGUAL DE 1200PX (A PARTIR DE 1200PX INCLUSIVE) - PC GRANDES, TELEVISIONES */
 @media only screen and (min-width:1200px){
 
-
+    .rooms-grid {
+    grid-template-columns: repeat(5, 1fr);
+}
 
 
 }

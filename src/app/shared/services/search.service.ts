@@ -6,6 +6,6 @@ import { Injectable, signal } from "@angular/core";
 
 export class SearchService {
 city = signal<string>('');
-guests = signal<number>(1);
+guests = signal<number | undefined>(undefined);
 
 }

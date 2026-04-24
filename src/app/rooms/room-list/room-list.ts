@@ -19,9 +19,8 @@ export class RoomList  {
 
   constructor() {
     effect(() => {
-      this.roomService.getAllRooms(this.search.city()).subscribe({
+      this.roomService.getAllRooms(this.search.city(), this.search.guests()).subscribe({
       next: (data) => {
-        console.log('Rooms:', data);
         this.rooms.set(data);
       },
       error: (err) => console.error('Error:', err)
