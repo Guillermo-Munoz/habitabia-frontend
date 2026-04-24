@@ -1,0 +1,8 @@
+<select (change)="onCityChange($event)">
+    <option value="">All cities</option>
+ @for (city of citiesList(); track city) {
+    <option [value]="city">{{ city }}</option>
+ } @empty {
+    <option value="">No cities available</option>
+ }
+</select>

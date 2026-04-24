@@ -1,7 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
 import { JsonPipe } from '@angular/common';
+import { SearchService } from '../../shared/services/search.service';
 
 
 @Component({
@@ -11,19 +12,23 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './room-list.css',
   
 })
-export class RoomList implements OnInit{
-private roomService = inject(RoomService);
+export class RoomList  {
+  private roomService = inject(RoomService);
+  private search = inject(SearchService);
   rooms = signal<Room[]>([]);
 
-ngOnInit(): void {
-  this.roomService.getAllRooms('Madrid').subscribe({
-    next: (data) => {
-      console.log('Rooms:', data);
-      this.rooms.set(data);
-    },
-    error: (err) => console.error('Error:', err)
-  });
-}
+  constructor() {
+    effect(() => {
+      this.roomService.getAllRooms(this.search.city()).subscribe({
+      next: (data) => {
+        console.log('Rooms:', data);
+        this.rooms.set(data);
+      },
+      error: (err) => console.error('Error:', err)
+    });
+    });
+  }
+
 
 
 }
