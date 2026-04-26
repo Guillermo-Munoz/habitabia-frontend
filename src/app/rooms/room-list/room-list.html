@@ -9,7 +9,7 @@
         <h2 class="room-card__title">{{ room.title }}</h2>
         <p class="room-card__guests">{{ room.maxGuests }} huéspedes</p>
         <p class="room-card__price">{{ room.priceAmount }}€ por noche</p>
-        <button class="room-card__btn-detalle">Ver Detalle</button>
+        <button class="room-card__btn-detalle" [routerLink]="['/rooms', room.id]">Ver Detalle</button>
     </div>
     
   </article>

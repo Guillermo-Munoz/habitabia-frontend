@@ -24,4 +24,9 @@ export class RoomService {
 getCities(): Observable<string[]> {
   return this.http.get<string[]>(`${this.apiUrl}/api/v1/rooms/cities`);
 }
+
+getRoomById(id: string): Observable<Room> {
+  return this.http.get<Room>(`${this.apiUrl}/api/v1/rooms/${id}`);
+
+}
 }
