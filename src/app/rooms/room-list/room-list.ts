@@ -1,13 +1,13 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
-import { JsonPipe } from '@angular/common';
 import { SearchService } from '../../shared/services/search.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-room-list',
-  imports: [JsonPipe],
+  imports: [RouterLink],
   templateUrl: './room-list.html',
   styleUrl: './room-list.css',
   
