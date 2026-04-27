@@ -21,14 +21,24 @@ export class RoomList  {
   constructor() {
     effect(() => {
       this.roomService.getAllRooms(this.search.city(), this.search.guests()).subscribe({
-      next: (data) => {
-        this.rooms.set(data);
-      },
-      error: (err) => console.error('Error:', err)
-    });
+        next: (data) => { this.rooms.set(data); },
+        error: (err) => console.error('Error:', err)
+      });
     });
   }
 
-
-
+  getStars(rating: number): string[] {
+    const stars: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      if (rating >= 1) {
+        stars.push('full');
+      } else if (rating > 0) {
+        stars.push('half');
+      } else {
+        stars.push('empty');
+      }
+      rating--;
+    }
+    return stars;
+  }
 }
