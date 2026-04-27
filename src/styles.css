@@ -55,6 +55,7 @@ table {
 :root {
   --color-primary: #1F3B69;
   --color-primary-hover: #133b7a;
+  --color-navbar: #173B6B;
   --color-gold: #FFB800;
   --color-card-bg: #fcfcfc;
   --color-btn-text: rgb(247, 245, 245);

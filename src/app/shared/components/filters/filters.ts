@@ -16,7 +16,6 @@ export class Filters implements OnInit {
   ngOnInit(): void {
     this.cities.subscribe({
       next: (data) => {
-        console.log('Cities:', data);
         this.citiesList.set(data);
       },
       error: (err) => console.error('Error:', err)

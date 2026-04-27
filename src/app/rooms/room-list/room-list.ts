@@ -3,11 +3,12 @@ import { Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
 import { SearchService } from '../../shared/services/search.service';
 import { RouterLink } from '@angular/router';
+import { Filters } from '../../shared/components/filters/filters';
 
 
 @Component({
   selector: 'app-room-list',
-  imports: [RouterLink],
+  imports: [RouterLink, Filters],
   templateUrl: './room-list.html',
   styleUrl: './room-list.css',
   
