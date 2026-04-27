@@ -5,19 +5,17 @@
     <div class="detail-header">
       <button class="detail-header__back" routerLink="/rooms">&#8249;</button>
       <div class="detail-header__info">
-        @if (rating() !== null) {
-          <div class="detail-header__stars">
-            @for (star of getStars(rating()!.averageRating); track $index) {
-              @if (star == "full") {
-                <span class="detail-header__star detail-header__star--full">&#9733;</span>
-              } @else if (star == "half") {
-                <span class="detail-header__star detail-header__star--half">&#9740;</span>
-              } @else {
-                <span class="detail-header__star detail-header__star--empty">&#9734;</span>
-              }
+        <div class="detail-header__stars">
+          @for (star of getStars(room()!.averageRating); track $index) {
+            @if (star == "full") {
+              <span class="detail-header__star detail-header__star--full">&#9733;</span>
+            } @else if (star == "half") {
+              <span class="detail-header__star detail-header__star--half">&#9740;</span>
+            } @else {
+              <span class="detail-header__star detail-header__star--empty">&#9734;</span>
             }
-          </div>
-        }
+          }
+        </div>
         <h2 class="detail-header__title">{{room()!.title}}</h2>
         <p class="detail-header__address">&#128205; {{room()!.city}}</p>
       </div>

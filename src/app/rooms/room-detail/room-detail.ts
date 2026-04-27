@@ -2,8 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Amenity, Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
-import { ReviewServices } from '../../reviews/services/review.services';
-import { Rating } from '../../reviews/models/rating.model';
 
 @Component({
   selector: 'app-room-detail',
@@ -15,20 +13,13 @@ export class RoomDetail implements OnInit {
 
   private route = inject(ActivatedRoute);
   private roomService = inject(RoomService);
-  private reviewService = inject(ReviewServices);
   private roomId = this.getRoomId();
   room = signal<Room | null>(null);
-  rating = signal<Rating | null>(null);
 
   ngOnInit(): void {
-     this.roomService.getRoomById(this.roomId!).subscribe({
+    this.roomService.getRoomById(this.roomId!).subscribe({
       next: (data) => {
         this.room.set(data);
-    }
-    });
-    this.reviewService.getReviewsByRoomId(this.roomId!).subscribe({
-      next: (data) => {
-        this.rating.set(data);
       }
     });
   }

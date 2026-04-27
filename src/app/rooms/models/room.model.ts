@@ -15,6 +15,8 @@ export interface Room {
   status: RoomStatus;
   imageUrls: string[];
   amenities: Amenity[];
+  averageRating: number;
+  totalReviews: number;
 }
 
 export type Amenity =
