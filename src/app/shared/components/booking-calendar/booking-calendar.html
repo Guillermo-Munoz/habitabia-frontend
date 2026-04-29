@@ -1,0 +1,35 @@
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+<div class="calendar">
+
+  <div class="calendar__header">
+    <button (click)="prevMonth()">&#8249;</button>
+    <span>{{ viewDate | date:'MMMM yyyy' }}</span>
+    <button (click)="nextMonth()">&#8250;</button>
+  </div>
+
+  <div class="calendar__weekdays">
+    <span>L</span><span>M</span><span>X</span>
+    <span>J</span><span>V</span><span>S</span><span>D</span>
+  </div>
+
+  <div class="calendar__grid">
+    @for (empty of emptyDays; track $index) {
+        <div class="calendar__day calendar__day--empty"></div>
+    }
+    @for (day of days; track day.getTime()) {
+        <button class="calendar__day " [class.calendar__day--available]="!isBooked(day) && !isPast(day)"
+          [class.calendar__day--booked]="isBooked(day)"
+          [class.calendar__day--selected]="isSelected(day)"
+          [class.calendar__day--in-range]="isInRange(day)"
+          [class.calendar__day--past]="isPast(day)"
+          [disabled]="isBooked(day) || isPast(day)"
+          (click)="selectDate(day)">
+          {{ day.getDate() }}
+        </button>
+    }
+  </div>
+
+
+</div>

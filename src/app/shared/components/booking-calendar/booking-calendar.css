@@ -1,0 +1,87 @@
+.calendar {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.calendar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 12px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.calendar__header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-primary);
+  padding: 0 8px;
+}
+
+.calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+
+.calendar__weekdays span {
+  text-align: center;
+  padding: 4px 0;
+  font-weight: 600;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar__day {
+  text-align: center;
+  padding: 10px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.calendar__day:hover {
+  background-color: #e8edf5;
+}
+
+.calendar__day--empty {
+  background: none;
+  cursor: default;
+}
+
+.calendar__day--booked {
+  color: #e53935;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  background-color: rgba(229, 57, 53, 0.08);
+}
+
+.calendar__day--available {
+  background-color: rgba(76, 175, 80, 0.06);
+}
+
+.calendar__day--selected {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+}
+
+.calendar__day--in-range {
+  background-color: color-mix(in srgb, var(--color-primary) 15%, white);
+  border-radius: 0;
+  color: var(--color-primary);
+}
