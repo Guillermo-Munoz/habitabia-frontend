@@ -54,14 +54,17 @@ export class RoomDetail implements OnInit {
  }
  private initMap(lat: number, lng: number): void {
     var map = L.map('map').setView([lat, lng], 13);
+    const title = (this.room()?.title ?? '').slice(0, 30);
+
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     L.marker([lat, lng]).addTo(map)
-        .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-        .openPopup();
+
+        .bindPopup(`<b>${title}</b><br>⭐ ${this.room()?.averageRating}`)
+
   }
 
   
