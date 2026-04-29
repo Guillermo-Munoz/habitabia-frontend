@@ -70,12 +70,13 @@
         </div>
 
         <div class="detail-calendar-placeholder">
-          <span>Calendario próximamente</span>
+          <app-booking-calendar [bookedRanges]="bookedRanges()" (datesSelected)="onDatesSelected($event)" />
+        </div>
+        <div class="detail-calendar-placeholder-button">
+          <button class="detail-reservar-btn" (click)="reservar()">Reservar</button>
         </div>
 
-        <div class="detail-map-placeholder">
-          <span>Mapa próximamente</span>
-        </div>
+        <div id="map" class="detail-map"></div>
 
       </aside>
 

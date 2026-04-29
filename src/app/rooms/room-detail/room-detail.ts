@@ -1,11 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Amenity, Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
+import { BookingCalendar, Booking as BookedRange } from '../../shared/components/booking-calendar/booking-calendar';
+import { Booking as BookingService } from '../services/booking';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-room-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, BookingCalendar],
   templateUrl: './room-detail.html',
   styleUrl: './room-detail.css',
 })
@@ -13,8 +16,16 @@ export class RoomDetail implements OnInit {
 
   private route = inject(ActivatedRoute);
   private roomService = inject(RoomService);
+  private bookingService = inject(BookingService);
   private roomId = this.getRoomId();
   room = signal<Room | null>(null);
+  bookedRanges = signal<BookedRange[]>([]);
+
+  selectedDates: { startDate: Date, endDate: Date } | null = null;
+
+  onDatesSelected(dates: { startDate: Date, endDate: Date }) {
+    this.selectedDates = dates;
+  }
 
   ngOnInit(): void {
     this.roomService.getRoomById(this.roomId!).subscribe({
@@ -22,28 +33,71 @@ export class RoomDetail implements OnInit {
         this.room.set(data);
       }
     });
+
+    this.bookingService.getBookingDates(this.roomId!).subscribe({
+      next: (data) => {
+        this.bookedRanges.set(data);
+      },
+      error: () => {
+        this.bookedRanges.set([]);
+      }
+    });
+
+  }
+ constructor() {
+    effect( () => {
+    const r = this.room();
+      if(r && r.latitude && r.longitude) {
+        setTimeout(() => this.initMap(r.latitude, r.longitude), 0);
+     }
+    });
+ }
+ private initMap(lat: number, lng: number): void {
+    var map = L.map('map').setView([lat, lng], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([lat, lng]).addTo(map)
+        .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+        .openPopup();
   }
 
+  
   getRoomId(): string | null {
     return this.route.snapshot.paramMap.get('id');
   }
 
   getStars(rating: number) {
-     const stars: string[] = []
-
+    const stars: string[] = [];
     for (let i = 0; i < 5; i++) {
-      if(rating >= 1) {
-        stars.push("full");
+      if (rating >= 1) {
+        stars.push('full');
       } else if (rating < 1 && rating > 0) {
-        stars.push("half");
-      } else if (rating <= 0) {
-        stars.push("empty");
+        stars.push('half');
+      } else {
+        stars.push('empty');
       }
-      rating --;
+      rating--;
     }
     return stars;
+  }
+
+  reservar(): void {
+  if (!this.selectedDates || !this.room()) return;
+  
+  const checkIn = this.selectedDates.startDate.toLocaleDateString('sv');
+  const checkOut = this.selectedDates.endDate.toLocaleDateString('sv');
+  
+  this.bookingService.createBooking(this.roomId!, this.room()!.hostId, checkIn, checkOut).subscribe({
+    next: () => alert('Reserva creada'),
+    error: () => alert('Error al reservar')
+    
+  });
+  
 }
-   
+
 
   amenityIcons: Record<Amenity, string> = {
     WIFI:             'icons/amenities/wifi.svg',
