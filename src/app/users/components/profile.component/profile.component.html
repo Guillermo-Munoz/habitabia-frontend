@@ -1,4 +1,7 @@
 <div class="profile-container">
+  <div class="profile-header">
+    <button class="profile-header__back" routerLink="/rooms">&#8249;</button>
+  </div>
   <div class="profile-hero">
     <img class="profile-avatar" [src]="user()?.avatarUrl ?? 'https://api.dicebear.com/9.x/thumbs/svg?seed=' + user()?.fullName" alt="avatar">
     <h2 class="profile-name">{{ user()?.fullName }}</h2>
