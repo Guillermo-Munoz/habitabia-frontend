@@ -1,5 +1,20 @@
 <header class="navbar">
   <div class="navbar__content">
     <span class="navbar__logo">Habitia</span>
+
+    <div class="navbar__user" (mouseleave)="dropdownOpen.set(false)">
+      <img class="navbar__avatar" 
+           [src]="user()?.avatarUrl ?? 'https://api.dicebear.com/9.x/thumbs/svg?seed=' + user()?.fullName"
+           (click)="dropdownOpen.set(!dropdownOpen())" />
+
+      @if (dropdownOpen()) {
+        <div class="navbar__overlay" (click)="dropdownOpen.set(false)"></div>
+        <div class="navbar__dropdown">
+          <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
+          <a (click)="logout()">Cerrar sesión</a>
+        </div>
+      }
+    </div>
+
   </div>
 </header>
