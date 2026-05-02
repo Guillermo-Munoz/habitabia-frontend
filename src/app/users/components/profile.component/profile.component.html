@@ -1,0 +1,39 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <button class="profile-header__back" routerLink="/rooms">&#8249;</button>
+  </div>
+  <div class="profile-hero">
+    <img class="profile-avatar" [src]="user()?.avatarUrl ?? 'https://api.dicebear.com/9.x/thumbs/svg?seed=' + user()?.fullName" alt="avatar">
+    <h2 class="profile-name">{{ user()?.fullName }}</h2>
+  </div>
+
+  <div class="profile-fields">
+
+    <div class="profile-field">
+      <span class="profile-field__label">Nombre</span>
+      @if (isEditMode()) {
+        <input class="profile-field__input" [(ngModel)]="editFormData.fullName" />    
+      }@else {
+        <span class="profile-field__value">{{ editFormData.fullName ?? '—' }}</span>
+      }
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field__label">Email</span>
+        <span class="profile-field__value">{{ user()?.email ?? '—' }}</span>
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field__label">Bio</span>
+      @if (isEditMode()) {
+        <input class="profile-field__input" [(ngModel)]="editFormData.bio" />    
+      }@else {
+        <span class="profile-field__value">{{ editFormData.bio ?? '—' }}</span>
+      }
+    </div>
+
+  </div>
+  <button class="profile-btn" (click)="isEditMode() ? saveProfile() : toggleEdit()">
+    {{ isEditMode() ? 'Guardar cambios' : 'Editar perfil' }}
+  </button>
+</div>
