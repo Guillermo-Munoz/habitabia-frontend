@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './shared/components/navbar/navbar';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,15 @@ import { Navbar } from './shared/components/navbar/navbar';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {}
+export class App {
+  private router = inject(Router);
+  showNavbar = signal(true);
+
+  constructor() {
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe((e: NavigationEnd) => {
+      this.showNavbar.set(e.url !== '/login');
+    });
+  }
+}
