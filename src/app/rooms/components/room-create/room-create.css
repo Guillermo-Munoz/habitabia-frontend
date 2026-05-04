@@ -10,10 +10,31 @@
   background-color: #fff;
 }
 
+.create__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.create__back {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+  flex-shrink: 0;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+}
+
 .create__title {
   font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .create__form {

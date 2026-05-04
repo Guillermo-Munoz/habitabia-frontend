@@ -1,5 +1,8 @@
 <div class="create">
-  <h2 class="create__title">Crear nueva habitación</h2>
+  <div class="create__header">
+    <button class="create__back" type="button" (click)="cancel()">&#8249;</button>
+    <h2 class="create__title">Crear nueva habitación</h2>
+  </div>
 
   <form class="create__form" (ngSubmit)="submit()" #roomForm="ngForm">
 
