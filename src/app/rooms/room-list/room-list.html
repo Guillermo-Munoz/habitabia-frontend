@@ -1,4 +1,9 @@
- <app-filters/>
+<div class="rooms-hero">
+  <div class="rooms-hero__top">
+    <a class="rooms-hero__map-link" routerLink="/rooms/map">🗺️ Buscar en el mapa</a>
+  </div>
+  <app-filters/>
+</div>
 
 <div class="rooms-grid">
 @for (room of rooms(); track room.id) {
