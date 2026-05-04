@@ -11,6 +11,7 @@
         <div class="navbar__overlay" (click)="dropdownOpen.set(false)"></div>
         <div class="navbar__dropdown">
           <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
+          <a routerLink="/rooms/create" (click)="dropdownOpen.set(false)">Publicar habitación</a>
           <a (click)="logout()">Cerrar sesión</a>
         </div>
       }
