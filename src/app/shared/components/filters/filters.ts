@@ -1,10 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { RoomService } from '../../../rooms/services/room.service';
 import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-filters',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './filters.html',
   styleUrl: './filters.css',
 })
