@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { RoomList } from "./room-list/room-list";
 import { AuthGuard } from "../shared/guards/auth.guard";
 import { RoomDetail } from "./room-detail/room-detail";
+import { RoomCreate } from "./components/room-create/room-create";
 
 export const ROOMS_ROUTES: Routes = [
     {
@@ -10,6 +11,11 @@ export const ROOMS_ROUTES: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'create',
+        component: RoomCreate,
+        canActivate: [AuthGuard]
+    },
+     {
         path: ':id',
         component: RoomDetail ,
         canActivate: [AuthGuard]
