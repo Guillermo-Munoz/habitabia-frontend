@@ -1,0 +1,344 @@
+/* ================================================= */
+/* MOBILE FIRST                                      */
+/* ================================================= */
+
+.create {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.create__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.create__back {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+  flex-shrink: 0;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+}
+
+.create__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.create__form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* SECTION */
+.create__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create__section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin: 0;
+}
+
+/* FIELD */
+.create__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.create__row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create__label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.create__input {
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius-btn);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.create__input:focus {
+  border-color: var(--color-primary);
+}
+
+.create__input--textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.create__error {
+  font-size: 0.8rem;
+  color: #e53935;
+}
+
+/* AMENITIES */
+.create__amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.create__amenity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.create__amenity input[type="checkbox"] {
+  display: none;
+}
+
+.create__amenity--selected {
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* FILE INPUT */
+.create__file-input {
+  display: none;
+}
+
+.create__dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 16px;
+  border: 2px dashed #ccc;
+  border-radius: var(--border-radius-card);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background-color 0.2s;
+  background-color: #fafafa;
+}
+
+.create__dropzone:hover,
+.create__dropzone--active {
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 5%, white);
+}
+
+.create__dropzone-icon {
+  font-size: 2.5rem;
+}
+
+.create__dropzone-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.create__dropzone-sub {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.create__file-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background-color: #f0f0f0;
+  border: 1px dashed #aaa;
+  border-radius: var(--border-radius-btn);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.create__file-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.create__file-btn::before {
+  content: '📷';
+  font-size: 1.4rem;
+}
+
+.create__file-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.create__file-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-btn);
+  font-size: 0.85rem;
+  color: var(--color-primary);
+}
+
+.create__file-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  padding: 0;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.create__file-remove:hover {
+  opacity: 1;
+}
+
+/* SEARCH */
+.create__search {
+  display: flex;
+  gap: 8px;
+}
+
+.create__search-btn {
+  padding: 12px 16px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-btn);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.create__search-results {
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius-btn);
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.create__search-result {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s;
+}
+
+.create__search-result:last-child {
+  border-bottom: none;
+}
+
+.create__search-result:hover {
+  background-color: #f7f7f7;
+}
+
+/* MAP */
+.create__map {
+  height: 280px;
+  border-radius: var(--border-radius-card);
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.create__coords {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 6px;
+}
+
+/* ACTIONS */
+.create__actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.create__btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: var(--border-radius-btn);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.create__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.create__btn--primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.create__btn--secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* ================================================= */
+/* DESKTOP  (≥ 900px)                                */
+/* ================================================= */
+
+@media (min-width: 900px) {
+  .create {
+    max-width: 720px;
+    padding: 40px 24px;
+  }
+
+  .create__row {
+    flex-direction: row;
+  }
+
+  .create__row .create__field {
+    flex: 1;
+  }
+}

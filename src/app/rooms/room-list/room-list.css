@@ -2,12 +2,34 @@
 /* FIRST MOBILE */
 /* ================================================= */
 
+.rooms-hero {
+  background-color: var(--color-navbar);
+  padding: 0 8px 0;
+}
+
+.rooms-hero__top {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px 0;
+}
+
+.rooms-hero__map-link {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rooms-hero__map-link:hover {
+  color: #fff;
+}
+
 .rooms-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 10px;
     row-gap: 12px;
-    padding: 5px;;
+    padding: 44px 5px 5px;
 }
 .room-card {
     display: flex;

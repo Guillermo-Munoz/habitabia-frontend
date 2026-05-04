@@ -1,0 +1,175 @@
+<div class="create">
+  <div class="create__header">
+    <button class="create__back" type="button" (click)="cancel()">&#8249;</button>
+    <h2 class="create__title">Crear nueva habitación</h2>
+  </div>
+
+  <form class="create__form" (ngSubmit)="submit()" #roomForm="ngForm">
+
+    <div class="create__section">
+      <h3 class="create__section-title">Información básica</h3>
+
+      <div class="create__field">
+        <label class="create__label" for="title">Título *</label>
+        <input class="create__input" type="text" id="title" name="title"
+          [(ngModel)]="formData.title" required #title="ngModel"
+          placeholder="Ej: Habitación luminosa en el centro">
+        @if (title.invalid && title.touched) {
+          <span class="create__error">El título es requerido</span>
+        }
+      </div>
+
+      <div class="create__field">
+        <label class="create__label" for="description">Descripción</label>
+        <textarea class="create__input create__input--textarea" id="description" name="description"
+          [(ngModel)]="formData.description" rows="4"
+          placeholder="Describe tu habitación..."></textarea>
+      </div>
+
+      <div class="create__field">
+        <label class="create__label" for="maxGuests">Máximo de huéspedes *</label>
+        <input class="create__input" type="number" id="maxGuests" name="maxGuests"
+          [(ngModel)]="formData.maxGuests" required min="1" max="10" #maxGuests="ngModel">
+        @if (maxGuests.invalid && maxGuests.touched) {
+          <span class="create__error">Debe ser entre 1 y 10</span>
+        }
+      </div>
+
+      <div class="create__field">
+        <label class="create__label">Imágenes (máx. 4, JPG/PNG, 5MB)</label>
+        <input type="file" id="images" multiple class="create__file-input"
+          accept="image/jpeg,image/png" (change)="onFileSelected($event)">
+        <label for="images" class="create__dropzone"
+          (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+          [class.create__dropzone--active]="isDragging">
+          <span class="create__dropzone-icon">📷</span>
+          <span class="create__dropzone-text">Arrastra tus fotos aquí</span>
+          <span class="create__dropzone-sub">o haz clic para seleccionar</span>
+        </label>
+        @if (selectedFiles.length > 0) {
+          <div class="create__file-names">
+            @for (file of selectedFiles; track file.name) {
+              <span class="create__file-tag">
+                {{ file.name }}
+                <button class="create__file-remove" type="button" (click)="removeFile(file)">✕</button>
+              </span>
+            }
+          </div>
+        }
+        @for (error of fileErrors; track error) {
+          <span class="create__error">{{ error }}</span>
+        }
+      </div>
+
+    </div>
+
+    <div class="create__section">
+      <h3 class="create__section-title">Ubicación</h3>
+
+      <div class="create__field">
+        <label class="create__label" for="street">Calle</label>
+        <input class="create__input" type="text" id="street" name="street"
+          [(ngModel)]="formData.street" placeholder="Ej: Calle Mayor 123">
+      </div>
+
+      <div class="create__row">
+        <div class="create__field">
+          <label class="create__label" for="city">Ciudad *</label>
+          <input class="create__input" type="text" id="city" name="city"
+            [(ngModel)]="formData.city" required #city="ngModel" placeholder="Ej: Santander">
+          @if (city.invalid && city.touched) {
+            <span class="create__error">La ciudad es requerida</span>
+          }
+        </div>
+
+        <div class="create__field">
+          <label class="create__label" for="country">País *</label>
+          <input class="create__input" type="text" id="country" name="country"
+            [(ngModel)]="formData.country" required #country="ngModel" placeholder="Ej: España">
+          @if (country.invalid && country.touched) {
+            <span class="create__error">El país es requerido</span>
+          }
+        </div>
+      </div>
+
+      <div class="create__field">
+        <label class="create__label">Buscar en el mapa</label>
+        <div class="create__search">
+          <input class="create__input" type="text"
+            [(ngModel)]="searchQuery" [ngModelOptions]="{standalone: true}"
+            placeholder="Ej: calle Mayor 123, Madrid"
+            (keydown.enter)="searchAddress()">
+          <button class="create__search-btn" type="button" (click)="searchAddress()">Buscar</button>
+        </div>
+        @if (searchResults.length > 0) {
+          <div class="create__search-results">
+            @for (result of searchResults; track result.place_id) {
+              <div class="create__search-result" (click)="selectResult(result)">
+                {{ result.display_name }}
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div id="create-map" class="create__map"></div>
+
+      @if (formData.latitude !== 0) {
+        <span class="create__coords">
+          &#128205; {{ formData.latitude.toFixed(5) }}, {{ formData.longitude.toFixed(5) }}
+        </span>
+      }
+
+    </div>
+
+
+    <div class="create__section">
+      <h3 class="create__section-title">Precio</h3>
+
+      <div class="create__row">
+        <div class="create__field">
+          <label class="create__label" for="priceAmount">Precio *</label>
+          <input class="create__input" type="number" id="priceAmount" name="priceAmount"
+            [(ngModel)]="formData.priceAmount" required min="0" step="1" #priceAmount="ngModel">
+          @if (priceAmount.invalid && priceAmount.touched) {
+            <span class="create__error">El precio es requerido</span>
+          }
+        </div>
+
+        <div class="create__field">
+          <label class="create__label" for="priceCurrency">Moneda *</label>
+          <select class="create__input" id="priceCurrency" name="priceCurrency"
+            [(ngModel)]="formData.priceCurrency" required #priceCurrency="ngModel">
+            <option value="" disabled>Selecciona una moneda</option>
+            <option value="EUR">EUR (€)</option>
+            <!-- <option value="USD">USD ($)</option>
+            <option value="GBP">GBP (£)</option> -->
+          </select>
+          @if (priceCurrency.invalid && priceCurrency.touched) {
+            <span class="create__error">La moneda es requerida</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="create__section">
+      <h3 class="create__section-title">Equipamiento</h3>
+      <div class="create__amenities">
+        @for (amenity of allAmenities; track amenity.value) {
+          <label class="create__amenity" [class.create__amenity--selected]="isSelected(amenity.value)">
+            <input type="checkbox" [value]="amenity.value" (change)="toggleAmenity(amenity.value)">
+            <span>{{ amenity.label }}</span>
+          </label>
+        }
+      </div>
+    </div>
+
+    <div class="create__actions">
+      <button class="create__btn create__btn--secondary" type="button" (click)="cancel()">Cancelar</button>
+      <button class="create__btn create__btn--primary" type="submit" [disabled]="roomForm.invalid">
+        Crear habitación
+      </button>
+    </div>
+
+  </form>
+</div>
