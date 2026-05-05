@@ -6,6 +6,8 @@
     align-items: center;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1000;
 }
 
 .navbar__content {
@@ -22,6 +24,18 @@
     font-weight: 700;
     letter-spacing: 1px;
     flex: 1;
+}
+
+.navbar__map-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: 24px;
+}
+
+.navbar__map-link:hover {
+    color: #fff;
 }
 
 .navbar__user {
