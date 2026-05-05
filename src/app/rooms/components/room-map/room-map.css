@@ -6,7 +6,7 @@
 .room-map__back {
   position: absolute;
   top: 16px;
-  left: 16px;
+  left: 64px;
   z-index: 1000;
   background: #fff;
   border: none;

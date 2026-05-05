@@ -8,9 +8,14 @@
 }
 
 .rooms-hero__top {
+  padding: 8px 40px 0;
+}
+
+.rooms-hero__container {
+  max-width: 1100px;
+  margin: 0 auto;
   display: flex;
   justify-content: flex-end;
-  padding: 8px 16px 0;
 }
 
 .rooms-hero__map-link {
@@ -22,6 +27,12 @@
 
 .rooms-hero__map-link:hover {
   color: #fff;
+}
+
+@media (min-width: 900px) {
+  .rooms-hero__top {
+    padding: 8px 80px 0;
+  }
 }
 
 .rooms-grid {
