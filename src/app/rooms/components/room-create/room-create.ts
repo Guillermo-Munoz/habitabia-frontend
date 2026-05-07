@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, effect, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { RoomService } from '../../services/room.service';
 import { Router } from '@angular/router';
 import { Amenity } from '../../models/room.model';
@@ -15,10 +16,12 @@ import * as L from 'leaflet';
 export class RoomCreate implements AfterViewInit {
   private roomService = inject(RoomService);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   private map!: L.Map;
   private marker?: L.Marker;
   private viewReady = signal(false);
+  submitting = signal(false);
 
   private readonly MAX_FILE_SIZE = 5 * 1024 * 1024;
   private readonly MAX_FILES = 4;
@@ -88,6 +91,7 @@ export class RoomCreate implements AfterViewInit {
 
     this.map.on('click', (e: L.LeafletMouseEvent) => {
       this.setMarker(e.latlng.lat, e.latlng.lng);
+      this.reverseGeocode(e.latlng.lat, e.latlng.lng);
     });
   }
 
@@ -101,11 +105,10 @@ export class RoomCreate implements AfterViewInit {
     }
   }
 
-  async searchAddress(): Promise<void> {
+  searchAddress(): void {
     if (!this.searchQuery.trim()) return;
-    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(this.searchQuery)}&format=json&limit=5`;
-    const res = await fetch(url);
-    this.searchResults = await res.json();
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(this.searchQuery)}&format=json&limit=5&addressdetails=1`;
+    this.http.get<any[]>(url).subscribe(results => this.searchResults = results);
   }
 
   selectResult(result: any): void {
@@ -115,6 +118,37 @@ export class RoomCreate implements AfterViewInit {
     this.setMarker(lat, lng);
     this.searchResults = [];
     this.searchQuery = result.display_name;
+
+    const addr = result.address;
+    if (addr) {
+      const city = addr.city || addr.town || addr.village || addr.municipality || '';
+      this.formData.city    = this.capitalize(city);
+      this.formData.country = this.capitalize(addr.country || '');
+      if (addr.road) {
+        const num = addr.house_number ? ` ${addr.house_number}` : '';
+        this.formData.street = addr.road + num;
+      }
+    }
+  }
+
+  private reverseGeocode(lat: number, lng: number): void {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
+    this.http.get<any>(url).subscribe(result => {
+      const addr = result.address;
+      if (!addr) return;
+      const city = addr.city || addr.town || addr.village || addr.municipality || '';
+      this.formData.city    = this.capitalize(city);
+      this.formData.country = this.capitalize(addr.country || '');
+      if (addr.road) {
+        const num = addr.house_number ? ` ${addr.house_number}` : '';
+        this.formData.street = addr.road + num;
+      }
+    });
+  }
+
+  private capitalize(str: string): string {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   isSelected(value: Amenity): boolean {
@@ -135,18 +169,25 @@ export class RoomCreate implements AfterViewInit {
   }
 
   submit(): void {
+    if (this.submitting()) return;
+    this.submitting.set(true);
+    this.formData.city    = this.capitalize(this.formData.city.trim());
+    this.formData.country = this.capitalize(this.formData.country.trim());
+
     this.roomService.createRoom(this.formData).subscribe({
       next: (room) => {
         const uploads = this.selectedFiles.map(file => this.roomService.uploadImage(room.id, file));
 
         if (uploads.length > 0) {
           forkJoin(uploads).subscribe({
-            next: () => this.router.navigate(['/rooms/' + room.id])
+            next: () => this.router.navigate(['/rooms/' + room.id]),
+            error: () => this.router.navigate(['/rooms/' + room.id])
           });
         } else {
           this.router.navigate(['/rooms/' + room.id]);
         }
-      }
+      },
+      error: () => this.submitting.set(false)
     });
   }
 

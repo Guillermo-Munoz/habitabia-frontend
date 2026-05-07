@@ -166,8 +166,8 @@
 
     <div class="create__actions">
       <button class="create__btn create__btn--secondary" type="button" (click)="cancel()">Cancelar</button>
-      <button class="create__btn create__btn--primary" type="submit" [disabled]="roomForm.invalid">
-        Crear habitación
+      <button class="create__btn create__btn--primary" type="submit" [disabled]="roomForm.invalid || submitting()">
+        {{ submitting() ? 'Creando...' : 'Crear habitación' }}
       </button>
     </div>
 
