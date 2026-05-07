@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginRequest } from '../models/auth.models';
+
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -22,7 +23,6 @@ export class Login {
 
   onSubmit() {
   if (this.loginForm.valid) {
-    
 
     const credentials = this.loginForm.value as LoginRequest;
 
@@ -39,5 +39,8 @@ export class Login {
     });
   }
 }
+ register(){
+    return this.router.navigate(['/register']);
+  }
 
 }

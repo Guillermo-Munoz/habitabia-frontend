@@ -19,5 +19,10 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./users/users.routes').then(m => m.USERS_ROUTES)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./auth/register/register').then(m => m.Register),
+    canActivate: [guestGuard]
   }
 ];

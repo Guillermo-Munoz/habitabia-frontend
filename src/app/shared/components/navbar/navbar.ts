@@ -17,6 +17,8 @@ export class Navbar implements OnInit{
 
   user = signal<UserModel | null>(null);
   dropdownOpen = signal(false);
+  
+  isLoggedIn = () => !!this.authService.getToken();
 
   ngOnInit(): void {
     if (!this.authService.getToken()) return;
@@ -25,8 +27,7 @@ export class Navbar implements OnInit{
     });
   }
 
-
-logout(): void {
+  logout(): void {
     this.authService.logout();
 }
 
