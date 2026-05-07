@@ -1,0 +1,13 @@
+@if (reservations()){
+    <div>
+        @for (reservation of reservations(); track reservation.id){
+            <div>{{reservation.status}}</div>
+            <div>{{reservation.checkIn}}</div>
+            <div>{{reservation.checkOut}}</div>
+            @if( reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED' ){
+              <button (click)="cancelar(reservation.id)">Cancelar</button>
+            }
+            
+        }
+    </div> 
+}
