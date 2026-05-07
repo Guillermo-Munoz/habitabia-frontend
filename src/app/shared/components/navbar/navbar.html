@@ -1,7 +1,9 @@
+ @if(isLoggedIn()){
 <header class="navbar">
   <div class="navbar__content">
     <span class="navbar__logo">Habitia</span>
 
+   
     <div class="navbar__user" (mouseleave)="dropdownOpen.set(false)">
       <img class="navbar__avatar" 
            [src]="user()?.avatarUrl ?? 'https://api.dicebear.com/9.x/thumbs/svg?seed=' + user()?.fullName"
@@ -16,6 +18,6 @@
         </div>
       }
     </div>
-
   </div>
 </header>
+    }
