@@ -86,6 +86,20 @@
                       <p>{{ review.hostResponse }}</p>
                     </div>
                   }
+
+                  @if (isHost() && !review.hostResponse) {
+                    @if (respondingToReviewId() === review.id) {
+                      <div class="detail-review__respond-form">
+                        <textarea class="detail-review__respond-textarea" [(ngModel)]="respondText" placeholder="Escribe tu respuesta..."></textarea>
+                        <div class="detail-review__respond-actions">
+                          <button class="detail-review__respond-btn detail-review__respond-btn--send" (click)="submitResponse(review.id)">Enviar</button>
+                          <button class="detail-review__respond-btn detail-review__respond-btn--cancel" (click)="cancelRespond()">Cancelar</button>
+                        </div>
+                      </div>
+                    } @else {
+                      <button class="detail-review__respond-trigger" (click)="startRespond(review.id)">Responder</button>
+                    }
+                  }
                 </li>
               }
             </ul>

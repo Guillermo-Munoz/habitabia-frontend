@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Amenity, Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
@@ -6,6 +6,7 @@ import { BookingCalendar, Booking as BookedRange } from '../../shared/components
 import { Booking as BookingService } from '../services/booking';
 import { ReviewServices } from '../../reviews/services/review.services';
 import { Review } from '../../reviews/models/rating.model';
+import { UserService } from '../../users/services/user.service';
 import { FormsModule } from '@angular/forms';
 
 import * as L from 'leaflet';
@@ -22,14 +23,24 @@ export class RoomDetail implements OnInit {
   private roomService = inject(RoomService);
   private bookingService = inject(BookingService);
   private reviewService = inject(ReviewServices);
+  private userService = inject(UserService);
   private roomId = this.getRoomId();
   room = signal<Room | null>(null);
   bookedRanges = signal<BookedRange[]>([]);
   reviews = signal<Review[]>([]);
   userBookingId = signal<string | null>(null);
+  currentUserId = signal<string | null>(null);
+
+  // computed: true solo cuando el usuario logueado es el dueño de la habitación
+  isHost = computed(() => !!this.currentUserId() && this.room()?.hostId === this.currentUserId());
+
   submittingReview = signal(false);
   reviewError = signal('');
   reviewForm = { rating: 5, comment: '' };
+
+  // qué reseña tiene el formulario de respuesta abierto (null = ninguna)
+  respondingToReviewId = signal<string | null>(null);
+  respondText = '';
 
   selectedDates: { startDate: Date, endDate: Date } | null = null;
 
@@ -66,6 +77,34 @@ export class RoomDetail implements OnInit {
       error: () => {}
     });
 
+    this.userService.getMe().subscribe({
+      next: (user) => this.currentUserId.set(user.id),
+      error: () => {}
+    });
+
+  }
+
+  startRespond(reviewId: string): void {
+    this.respondingToReviewId.set(reviewId);
+    this.respondText = '';
+  }
+
+  cancelRespond(): void {
+    this.respondingToReviewId.set(null);
+    this.respondText = '';
+  }
+
+  submitResponse(reviewId: string): void {
+    if (!this.respondText.trim()) return;
+    this.reviewService.respondToReview(reviewId, this.respondText.trim() ).subscribe({
+      next: (updated) => {
+        this.reviews.update(list =>
+          list.map(r => r.id === reviewId ? updated : r)
+        );
+        this.cancelRespond();
+      },
+      error: () => alert('No se pudo enviar la respuesta')
+    });
   }
 
   submitReview(): void {
