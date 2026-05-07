@@ -4,11 +4,15 @@ import { Amenity, Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
 import { BookingCalendar, Booking as BookedRange } from '../../shared/components/booking-calendar/booking-calendar';
 import { Booking as BookingService } from '../services/booking';
+import { ReviewServices } from '../../reviews/services/review.services';
+import { Review } from '../../reviews/models/rating.model';
+import { FormsModule } from '@angular/forms';
+
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-room-detail',
-  imports: [RouterLink, BookingCalendar],
+  imports: [RouterLink, BookingCalendar, FormsModule],
   templateUrl: './room-detail.html',
   styleUrl: './room-detail.css',
 })
@@ -17,9 +21,15 @@ export class RoomDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private roomService = inject(RoomService);
   private bookingService = inject(BookingService);
+  private reviewService = inject(ReviewServices);
   private roomId = this.getRoomId();
   room = signal<Room | null>(null);
   bookedRanges = signal<BookedRange[]>([]);
+  reviews = signal<Review[]>([]);
+  userBookingId = signal<string | null>(null);
+  submittingReview = signal(false);
+  reviewError = signal('');
+  reviewForm = { rating: 5, comment: '' };
 
   selectedDates: { startDate: Date, endDate: Date } | null = null;
 
@@ -43,6 +53,47 @@ export class RoomDetail implements OnInit {
       }
     });
 
+    this.reviewService.getReviewsByRoomId(this.roomId!).subscribe({
+      next: (page) => this.reviews.set(page.content),
+      error: () => {}
+    });
+
+    this.bookingService.getMyBookings().subscribe({
+      next: (bookings) => {
+        const booking = bookings.find(b => b.roomId === this.roomId);
+        if (booking) this.userBookingId.set(booking.id);
+      },
+      error: () => {}
+    });
+
+  }
+
+  submitReview(): void {
+    if (this.submittingReview() || !this.userBookingId()) return;
+    this.submittingReview.set(true);
+    this.reviewError.set('');
+    this.reviewService.createReview({
+      bookingId: this.userBookingId()!,
+      rating: this.reviewForm.rating,
+      comment: this.reviewForm.comment,
+      isReviewForHost: false,
+      isPublic: true,
+    }).subscribe({
+      next: (review) => {
+        this.reviews.update(list => [review, ...list]);
+        this.userBookingId.set(null);
+        this.submittingReview.set(false);
+        this.reviewForm = { rating: 5, comment: '' };
+      },
+      error: () => {
+        this.reviewError.set('No se pudo publicar la reseña. Es posible que ya hayas reseñado esta habitación.');
+        this.submittingReview.set(false);
+      }
+    });
+  }
+
+  formatDate(dateStr: string): string {
+    return new Date(dateStr).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
   }
  constructor() {
     effect( () => {

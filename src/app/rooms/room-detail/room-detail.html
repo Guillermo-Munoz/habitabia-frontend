@@ -60,6 +60,57 @@
           <span class="detail-info__item">&#128100; {{ room()!.maxGuests }} huéspedes</span>
         </div>
 
+        <!-- REVIEWS -->
+        <section class="detail-section">
+          <h3 class="detail-section__title">Reseñas</h3>
+
+          @if (reviews().length === 0) {
+            <p class="detail-reviews__empty">Todavía no hay reseñas.</p>
+          } @else {
+            <ul class="detail-reviews__list">
+              @for (review of reviews(); track review.id) {
+                <li class="detail-review">
+                  <div class="detail-review__header">
+                    <span class="detail-review__stars">
+                      @for (star of getStars(review.rating); track $index) {
+                        @if (star === 'full') { <span class="detail-header__star detail-header__star--full">&#9733;</span> }
+                        @else { <span class="detail-header__star detail-header__star--empty">&#9734;</span> }
+                      }
+                    </span>
+                    <span class="detail-review__date">{{ formatDate(review.createdAt) }}</span>
+                  </div>
+                  <p class="detail-review__comment">{{ review.comment }}</p>
+                  @if (review.hostResponse) {
+                    <div class="detail-review__host-response">
+                      <strong>Respuesta del anfitrión:</strong>
+                      <p>{{ review.hostResponse }}</p>
+                    </div>
+                  }
+                </li>
+              }
+            </ul>
+          }
+
+          @if (userBookingId()) {
+            <div class="detail-review-form">
+              <h4 class="detail-review-form__title">Escribe tu reseña</h4>
+              <div class="detail-review-form__stars">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <button type="button" class="detail-review-form__star" [class.active]="reviewForm.rating >= star" (click)="reviewForm.rating = star">&#9733;</button>
+                }
+              </div>
+              <textarea class="detail-review-form__textarea" [(ngModel)]="reviewForm.comment" placeholder="Comparte tu experiencia..."></textarea>
+              @if (reviewError()) {
+                <p class="detail-review-form__error">{{ reviewError() }}</p>
+              }
+              <button class="detail-review-form__btn" (click)="submitReview()" [disabled]="submittingReview()">
+                {{ submittingReview() ? 'Publicando...' : 'Publicar reseña' }}
+              </button>
+            </div>
+          }
+
+        </section>
+
       </div>
 
       <aside class="detail-sidebar">
@@ -68,6 +119,7 @@
           <span class="detail-price__amount">${{ room()!.priceAmount }}</span>
           <span class="detail-price__unit"> / noche</span>
         </div>
+
 
         <div class="detail-calendar-placeholder">
           <app-booking-calendar [bookedRanges]="bookedRanges()" (datesSelected)="onDatesSelected($event)" />

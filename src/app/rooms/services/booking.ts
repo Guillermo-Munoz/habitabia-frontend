@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -16,5 +17,9 @@ export class Booking {
   
   createBooking(roomId: string, hostId: string, checkIn: string, checkOut: string, guests: number = 1) {
     return this.http.post(`${this.apiUrl}/api/v1/bookings`, {roomId, hostId, checkIn, checkOut, guests});
+  }
+
+  getMyBookings(): Observable<{ id: string; roomId: string }[]> {
+    return this.http.get<{ id: string; roomId: string }[]>(`${this.apiUrl}/api/v1/bookings/guest/me`);
   }
 }
