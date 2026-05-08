@@ -32,10 +32,14 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
-  background-color: #F5F5F5;
+html {
+  font-size: 18px;
+}
 
+body {
+	line-height: 1.4;
+  background-color: #F5F5F5;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 ol, ul {
 	list-style: none;

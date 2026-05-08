@@ -18,12 +18,16 @@
     align-items: center;
 }
 
+.navbar__logo-link {
+    flex: 1;
+    text-decoration: none;
+}
+
 .navbar__logo {
     color: #fff;
     font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: 1px;
-    flex: 1;
 }
 
 .navbar__map-link {

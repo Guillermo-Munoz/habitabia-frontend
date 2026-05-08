@@ -1,8 +1,9 @@
  @if(isLoggedIn()){
 <header class="navbar">
   <div class="navbar__content">
-    <span class="navbar__logo">Habitia</span>
-
+    <a class="navbar__logo-link" routerLink="/">
+      <span class="navbar__logo">Habitia</span>
+    </a>
    
     <div class="navbar__user" (mouseleave)="dropdownOpen.set(false)">
       <img class="navbar__avatar" 
@@ -12,8 +13,9 @@
       @if (dropdownOpen()) {
         <div class="navbar__overlay" (click)="dropdownOpen.set(false)"></div>
         <div class="navbar__dropdown">
-          <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
+          <a routerLink="/reservations" (click)="dropdownOpen.set(false)">Mis Reservas</a>
           <a routerLink="/rooms/create" (click)="dropdownOpen.set(false)">Publicar habitación</a>
+          <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
           <a (click)="logout()">Cerrar sesión</a>
         </div>
       }
