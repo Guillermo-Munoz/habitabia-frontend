@@ -1,13 +1,42 @@
-@if (reservations()){
-    <div>
-        @for (reservation of reservations(); track reservation.id){
-            <div>{{reservation.status}}</div>
-            <div>{{reservation.checkIn}}</div>
-            <div>{{reservation.checkOut}}</div>
-            @if( reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED' ){
-              <button (click)="cancelar(reservation.id)">Cancelar</button>
-            }
-            
-        }
-    </div> 
+<div class="reservations-list">
+@for (reservation of reservations(); track reservation.id) {
+  <div class="reservation-card">
+
+    <div class="reservation-card__info">
+      <img class="reservation-card__img"
+           [src]="reservation.roomImageUrl || '404-imagen-no-encontrada.png'"
+           alt="imagen habitacion">
+      <div>
+        <div class="reservation-card__title">{{reservation.roomTitle}}</div>
+        <div class="reservation-card__checkin">
+          <span class="material-icons">calendar_today</span>
+          Check-in: {{reservation.checkIn}}
+        </div>
+        <div class="reservation-card__checkout">
+          <span class="material-icons">calendar_month</span>
+          Check-out: {{reservation.checkOut}}
+        </div>
+      </div>
+    </div>
+
+    <div class="reservation-card__divider"></div>
+
+    <div class="reservation-card__actions">
+      <div class="reservation-card__status"
+        [class.status--requested]="reservation.status === 'REQUESTED'"
+        [class.status--accepted]="reservation.status === 'ACCEPTED'"
+        [class.status--cancelled]="reservation.status === 'CANCELLED'">
+        {{reservation.status | bookingStatus}}
+      </div>
+      @if(reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED') {
+        <button class="reservation-card__btn--cancel"
+                (click)="cancelReservation(reservation.id)">
+          <span class="material-icons">close</span>
+          Cancelar
+        </button>
+      }
+    </div>
+
+  </div>
 }
+</div>
