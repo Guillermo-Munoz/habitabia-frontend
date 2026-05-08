@@ -1,4 +1,5 @@
 export interface Reservation{
+     roomTitle: string;
      id: string;
      roomId: string;
      guestId: string;
@@ -8,5 +9,6 @@ export interface Reservation{
      guests: number;
      status: string;
      message: string;
+     roomImageUrl: string;
      createdAt: string;
 }
