@@ -36,5 +36,10 @@ export const routes: Routes = [
     loadComponent: () => import('./reservations/components/host-bookings/host-bookings').then(m => m.HostBookings),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'messages/:bookingId',
+    loadComponent: () => import('./messages/components/message-view/message-view').then(m => m.MessageView),
+    canActivate: [AuthGuard]
+  },
 
 ];

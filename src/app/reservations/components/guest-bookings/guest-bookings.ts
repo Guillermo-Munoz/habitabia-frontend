@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ReservationService } from '../../services/booking.service';
 import { Reservation } from '../../models/reservation.model';
 import { StatePiped } from '../../../shared/pipes/booking-status.pipe';
 
 @Component({
   selector: 'app-guest-bookings',
-  imports: [StatePiped],
+  imports: [StatePiped, RouterLink],
   templateUrl: './guest-bookings.html',
   styleUrl: './guest-bookings.css',
 })
