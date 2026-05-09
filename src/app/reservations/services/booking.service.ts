@@ -17,7 +17,24 @@ export class ReservationService {
         return this.http.get<Reservation[]>(`${this.apiUrl}/api/v1/bookings/guest/me`);
     }
   
-  cancel(id: string): Observable<Reservation>{
-    return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/cancel`, {});
-  }
+    cancel(id: string): Observable<Reservation>{
+        return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/cancel`, {});
+    }
+
+    getMyBookingsAsHost(): Observable<Reservation[]> {
+        return this.http.get<Reservation[]>(`${this.apiUrl}/api/v1/bookings/host/me`);
+    }
+
+    accept(id: string): Observable<Reservation> {
+        return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/accept`, {});
+    }
+
+    reject(id: string): Observable<Reservation> {
+        return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/reject`, {});
+    }
+
+    complete(id: string): Observable<Reservation> {
+        return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/complete`, {});
+    }
+
 }

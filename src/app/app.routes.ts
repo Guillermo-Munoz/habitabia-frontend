@@ -30,5 +30,11 @@ export const routes: Routes = [
     path: 'reservations',
     loadComponent: () => import('./reservations/components/guest-bookings/guest-bookings').then(m => m.GuestBookings),
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'hosting',
+    loadComponent: () => import('./reservations/components/host-bookings/host-bookings').then(m => m.HostBookings),
+    canActivate: [AuthGuard]
+  },
+
 ];
