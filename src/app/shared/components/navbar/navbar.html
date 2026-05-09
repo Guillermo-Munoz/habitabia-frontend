@@ -14,6 +14,7 @@
         <div class="navbar__overlay" (click)="dropdownOpen.set(false)"></div>
         <div class="navbar__dropdown">
           <a routerLink="/reservations" (click)="dropdownOpen.set(false)">Mis Reservas</a>
+          <a routerLink="/hosting" (click)="dropdownOpen.set(false)">Gestionar habitaciones</a>
           <a routerLink="/rooms/create" (click)="dropdownOpen.set(false)">Publicar habitación</a>
           <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
           <a (click)="logout()">Cerrar sesión</a>
