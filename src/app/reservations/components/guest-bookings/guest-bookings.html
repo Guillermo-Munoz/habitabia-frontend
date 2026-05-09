@@ -22,6 +22,10 @@
     <div class="reservation-card__divider"></div>
 
     <div class="reservation-card__actions">
+      <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">
+        <span class="material-icons">chat</span>
+        Mensajes
+      </a>
       <div class="reservation-card__status"
         [class.status--requested]="reservation.status === 'REQUESTED'"
         [class.status--accepted]="reservation.status === 'ACCEPTED'"

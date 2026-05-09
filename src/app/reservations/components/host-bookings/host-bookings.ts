@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { StatePiped } from '../../../shared/pipes/booking-status.pipe';
 import { ReservationService } from '../../services/booking.service';
 import { Reservation } from '../../models/reservation.model';
@@ -6,7 +7,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-host-bookings',
-  imports: [StatePiped],
+  imports: [StatePiped, RouterLink],
   templateUrl: './host-bookings.html',
   styleUrl: './host-bookings.css',
 })

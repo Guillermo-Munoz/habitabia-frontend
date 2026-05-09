@@ -135,6 +135,29 @@
 .reservation-card__btn--complete { border: 1px solid #1565c0; color: #1565c0; }
 .reservation-card__btn--complete:hover { background: #e3f2fd; }
 
+.reservation-card__btn--messages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 12px;
+  padding: 4px 8px;
+  min-width: 80px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  color: #555;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reservation-card__btn--messages:hover {
+  background: #f0f0f0;
+}
+
+.reservation-card__btn--messages .material-icons {
+  font-size: 14px;
+}
+
 
 /* ================================================= */
 /* MEDIA QUERIES */
