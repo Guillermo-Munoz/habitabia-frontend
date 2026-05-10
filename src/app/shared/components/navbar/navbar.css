@@ -45,6 +45,9 @@
 .navbar__user {
     position: relative;
     padding: 20px 0 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .navbar__avatar {
@@ -91,6 +94,97 @@
 .navbar__dropdown a:hover {
     background-color: #f5f5f5;
     color: var(--color-primary);
+}
+
+.navbar__notifications {
+    position: relative;
+    margin-right: 16px;
+}
+
+.navbar__bell {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    position: relative;
+}
+
+.navbar__bell:hover {
+    opacity: 0.8;
+}
+
+.navbar__badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #e53935;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+}
+
+.navbar__notifications-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    min-width: 280px;
+    max-height: 360px;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.navbar__notification-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+
+.navbar__notification-item:last-child {
+    border-bottom: none;
+}
+
+.navbar__notification-item:hover {
+    background-color: #f9f9f9;
+}
+
+.navbar__notification-item--unread {
+    background-color: #f0f4ff;
+}
+
+.navbar__notification-item--unread:hover {
+    background-color: #e8eeff;
+}
+
+.navbar__notification-item p {
+    margin: 0 0 4px;
+    font-size: 0.88rem;
+    color: #222;
+}
+
+.navbar__notification-time {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.navbar__notifications-empty {
+    padding: 20px 16px;
+    font-size: 0.88rem;
+    color: #999;
+    text-align: center;
+    margin: 0;
 }
 
 @media (min-width: 900px) {
