@@ -1,1 +1,25 @@
-<p>message-view works!</p>
+<div class="chat">
+
+  <div class="chat__header">
+    <a class="chat__back" [routerLink]="['/reservations']">
+      <span class="material-icons">arrow_back</span>
+    </a>
+    <span class="chat__title">Conversación</span>
+  </div>
+
+  <div class="chat__messages" #messagesContainer>
+    @for (msg of messages(); track msg.id) {
+      <div [class]="msg.senderId === currentUserId() ? 'chat__bubble chat__bubble--own' : 'chat__bubble'">
+        {{msg.content}}
+      </div>
+    }
+  </div>
+
+  <div class="chat__input">
+    <input [(ngModel)]="newMessage" placeholder="Escribe un mensaje..." (keyup.enter)="sendMessage()" />
+    <button (click)="sendMessage()">
+      <span class="material-icons">send</span>
+    </button>
+  </div>
+
+</div>
