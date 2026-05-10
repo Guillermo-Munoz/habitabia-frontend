@@ -6,6 +6,30 @@
     </a>
    
     <div class="navbar__user" (mouseleave)="dropdownOpen.set(false)">
+      <div class="navbar__notifications">
+      <button class="navbar__bell" (click)="notificationOpen.set(!notificationOpen())">
+        <span class="material-icons">notifications</span>
+        @if (unreadCount() > 0) {
+          <span class="navbar__badge">{{ unreadCount()}}</span>
+        }
+      </button>
+
+      @if (notificationOpen()) {
+      <div class="navbar__notifications-dropdown">
+        @if (notifications()?.length === 0) {
+          <p class="navbar__notifications-empty">Sin notificaciones</p>
+        }
+        @for (notif of notifications(); track notif.id) {
+          <div class="navbar__notification-item" (click)="navigateTo(notif)" [class.navbar__notification-item--unread]="!notif.isRead">
+            <p>{{ notif.message }}</p>
+            <span class="navbar__notification-time">{{ notif.createdAt | date:'short' }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    </div>
+
       <img class="navbar__avatar" 
            [src]="user()?.avatarUrl ?? 'https://api.dicebear.com/9.x/thumbs/svg?seed=' + user()?.fullName"
            (click)="dropdownOpen.set(!dropdownOpen())" />
