@@ -16,14 +16,16 @@
 
       @if (notificationOpen()) {
       <div class="navbar__notifications-dropdown">
-        @if (notifications()?.length === 0) {
-          <p class="navbar__notifications-empty">Sin notificaciones</p>
+        @if (unreadCount() === 0) {
+          <p class="navbar__notifications-empty">Sin notificaciones nuevas</p>
         }
         @for (notif of notifications(); track notif.id) {
-          <div class="navbar__notification-item" (click)="navigateTo(notif)" [class.navbar__notification-item--unread]="!notif.isRead">
-            <p>{{ notif.message }}</p>
-            <span class="navbar__notification-time">{{ notif.createdAt | date:'short' }}</span>
-          </div>
+          @if (!notif.isRead) {
+            <div class="navbar__notification-item" (click)="navigateTo(notif)">
+              <p>{{ notif.message }}</p>
+              <span class="navbar__notification-time">{{ notif.createdAt | date:'short' }}</span>
+            </div>
+          }
         }
       </div>
     }
