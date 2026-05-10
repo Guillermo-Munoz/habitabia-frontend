@@ -62,6 +62,9 @@ export class Navbar implements OnInit{
       REVIEW_RESPONSE: '/hosting',
       BOOKING_ACCEPTED: '/reservations',
       BOOKING_REJECTED: '/reservations',
+      BOOKING_CONFIRMED: '/hosting',
+      BOOKING_CANCELLED: '/reservations',
+      BOOKING_COMPLETED: '/reservations',
     };
     const route = routes[notif.type];
     if (route) this.router.navigate([route]);
