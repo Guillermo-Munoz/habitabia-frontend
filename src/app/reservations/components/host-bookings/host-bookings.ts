@@ -35,7 +35,10 @@ export class HostBookings implements OnInit {
       error: () => alert(errorMsg)
     });
   }
-
-
+  confirm(msg: string, id: string, action: (id: string) => Observable<Reservation>, errorMsg: string) {
+    if (window.confirm(msg)) {
+      this.updateStatus(id, action, errorMsg);
+    }
+  }
 
 }
