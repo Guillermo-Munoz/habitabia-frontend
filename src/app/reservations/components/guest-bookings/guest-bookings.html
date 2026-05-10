@@ -21,23 +21,28 @@
 
     <div class="reservation-card__divider"></div>
 
-    <div class="reservation-card__actions">
-      <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">
-        <span class="material-icons">chat</span>
-        Mensajes
-      </a>
-      <div class="reservation-card__status"
-        [class.status--requested]="reservation.status === 'REQUESTED'"
-        [class.status--accepted]="reservation.status === 'ACCEPTED'"
-        [class.status--cancelled]="reservation.status === 'CANCELLED'">
-        {{reservation.status | bookingStatus}}
+    <div class="reservation-card__footer">
+      <div class="reservation-card__actions-top">
+        <div class="reservation-card__status"
+          [class.status--requested]="reservation.status === 'REQUESTED'"
+          [class.status--accepted]="reservation.status === 'ACCEPTED'"
+          [class.status--cancelled]="reservation.status === 'CANCELLED'">
+          {{reservation.status | bookingStatus}}
+        </div>
+        <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">
+          <span class="material-icons">chat</span>
+          Mensajes
+        </a>
       </div>
+
       @if(reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED') {
-        <button class="reservation-card__btn--cancel"
-                (click)="cancelReservation(reservation.id)">
-          <span class="material-icons">close</span>
-          Cancelar
-        </button>
+        <div class="reservation-card__actions-bottom">
+          <button class="reservation-card__btn--cancel"
+                  (click)="cancelReservation(reservation.id, '¿Cancelar esta reserva?')">
+            <span class="material-icons">close</span>
+            Cancelar
+          </button>
+        </div>
       }
     </div>
 

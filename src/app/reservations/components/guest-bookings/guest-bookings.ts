@@ -25,7 +25,8 @@ export class GuestBookings implements OnInit{
 
     })
   }
-  cancelReservation(id: string){
+  cancelReservation(id: string, msg: string){
+    if (!window.confirm(msg)) return;
     this.reservation.cancel(id).subscribe({
       next: (update) => {
         this.reservations.update(list =>

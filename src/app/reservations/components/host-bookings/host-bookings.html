@@ -21,44 +21,48 @@
 
     <div class="reservation-card__divider"></div>
 
-    <div class="reservation-card__actions">
-      <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">
-        <span class="material-icons">chat</span>
-        Mensajes
-      </a>
-      <div class="reservation-card__status"
-        [class.status--requested]="reservation.status === 'REQUESTED'"
-        [class.status--accepted]="reservation.status === 'ACCEPTED'"
-        [class.status--cancelled]="reservation.status === 'CANCELLED'">
-        {{reservation.status | bookingStatus}}
+    <div class="reservation-card__footer">
+      <div class="reservation-card__actions-top">
+        <div class="reservation-card__status"
+          [class.status--requested]="reservation.status === 'REQUESTED'"
+          [class.status--accepted]="reservation.status === 'ACCEPTED'"
+          [class.status--cancelled]="reservation.status === 'CANCELLED'">
+          {{reservation.status | bookingStatus}}
+        </div>
+        <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">
+          <span class="material-icons">chat</span>
+          Mensajes
+        </a>
       </div>
-      @if(reservation.status === 'REQUESTED'){
-        <button class="reservation-card__btn--accept"
-                (click)="updateStatus(reservation.id, reservationSvc.accept.bind(reservationSvc), 'No se pudo aceptar')">
-          <span class="material-icons">check</span>
-          Aceptar
-        </button>
-        <button class="reservation-card__btn--reject"
-                (click)="updateStatus(reservation.id, reservationSvc.reject.bind(reservationSvc),'No se pudo rechazar')">
-          <span class="material-icons">block</span>
-          Rechazar
-        </button>
+
+      <div class="reservation-card__actions-bottom">
+        @if(reservation.status === 'REQUESTED'){
+          <button class="reservation-card__btn--accept"
+                  (click)="confirm('¿Aceptar la reserva?',reservation.id, reservationSvc.accept.bind(reservationSvc), 'No se pudo aceptar')">
+            <span class="material-icons">check</span>
+            Aceptar
+          </button>
+          <button class="reservation-card__btn--reject"
+                  (click)="confirm('¿Rechazar esta reserva?', reservation.id, reservationSvc.reject.bind(reservationSvc),'No se pudo rechazar')">
+            <span class="material-icons">block</span>
+            Rechazar
+          </button>
         }
         @if(reservation.status === 'ACCEPTED'){
-        <button class="reservation-card__btn--complete"
-                (click)="updateStatus(reservation.id, reservationSvc.complete.bind(reservationSvc),'No se pudo completar')">
-          <span class="material-icons">done_all</span>
-          Completar
-        </button>
+          <button class="reservation-card__btn--complete"
+                  (click)="confirm('¿Marcar como completada?', reservation.id, reservationSvc.complete.bind(reservationSvc),'No se pudo completar')">
+            <span class="material-icons">done_all</span>
+            Completar
+          </button>
         }
-
-      @if(reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED') {
-        <button class="reservation-card__btn--cancel"
-                (click)="updateStatus(reservation.id, reservationSvc.cancel.bind(reservationSvc), 'No se pudo cancelar')">
-          <span class="material-icons">close</span>
-          Cancelar
-        </button>
-      }
+        @if(reservation.status === 'REQUESTED' || reservation.status === 'ACCEPTED') {
+          <button class="reservation-card__btn--cancel"
+                  (click)="confirm('¿Cancelar esta reserva?', reservation.id, reservationSvc.cancel.bind(reservationSvc), 'No se pudo cancelar')">
+            <span class="material-icons">close</span>
+            Cancelar
+          </button>
+        }
+      </div>
     </div>
 
   </div>
