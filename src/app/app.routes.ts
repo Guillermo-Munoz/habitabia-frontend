@@ -41,5 +41,10 @@ export const routes: Routes = [
     loadComponent: () => import('./messages/components/message-view/message-view').then(m => m.MessageView),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'admin',
+    loadComponent: () => import('./admin/components/admin-panel/admin-panel').then(m => m.AdminPanel),
+    canActivate: [AuthGuard]
+  },
 
 ];

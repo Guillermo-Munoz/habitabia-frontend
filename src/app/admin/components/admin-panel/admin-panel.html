@@ -1,0 +1,119 @@
+<div class="admin">
+
+  <!-- SIDEBAR -->
+  <aside class="admin__sidebar">
+    <div class="admin__sidebar-logo">
+      <span class="material-icons">admin_panel_settings</span>
+      <span>Admin</span>
+    </div>
+    <nav class="admin__nav">
+      <button class="admin__nav-item" [class.admin__nav-item--active]="activeSection() === 'dashboard'" (click)="activeSection.set('dashboard')">
+        <span class="material-icons">dashboard</span> Dashboard
+      </button>
+      <button class="admin__nav-item" [class.admin__nav-item--active]="activeSection() === 'reviews'" (click)="activeSection.set('reviews')">
+        <span class="material-icons">rate_review</span> Reseñas
+        @if (review().length > 0) {
+          <span class="admin__nav-badge">{{ review().length }}</span>
+        }
+      </button>
+      <button class="admin__nav-item" [class.admin__nav-item--active]="activeSection() === 'words'" (click)="activeSection.set('words')">
+        <span class="material-icons">block</span> Palabras prohibidas
+      </button>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin__main">
+
+    <!-- DASHBOARD -->
+    @if (activeSection() === 'dashboard') {
+      <div class="admin__content">
+        <h1 class="admin__page-title">Dashboard</h1>
+        <div class="admin__metrics">
+          <div class="admin__metric-card">
+            <span class="material-icons admin__metric-icon">rate_review</span>
+            <div>
+              <p class="admin__metric-value">{{ review().length }}</p>
+              <p class="admin__metric-label">Reseñas pendientes</p>
+            </div>
+          </div>
+          <div class="admin__metric-card">
+            <span class="material-icons admin__metric-icon">block</span>
+            <div>
+              <p class="admin__metric-value">{{ bannedWords().length }}</p>
+              <p class="admin__metric-label">Palabras prohibidas</p>
+            </div>
+          </div>
+          <div class="admin__metric-card admin__metric-card--empty">
+            <span class="material-icons admin__metric-icon">people</span>
+            <div>
+              <p class="admin__metric-value">—</p>
+              <p class="admin__metric-label">Usuarios totales</p>
+            </div>
+          </div>
+          <div class="admin__metric-card admin__metric-card--empty">
+            <span class="material-icons admin__metric-icon">home</span>
+            <div>
+              <p class="admin__metric-value">—</p>
+              <p class="admin__metric-label">Habitaciones activas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- RESEÑAS -->
+    @if (activeSection() === 'reviews') {
+      <div class="admin__content">
+        <h1 class="admin__page-title">Reseñas pendientes</h1>
+        @if (review().length === 0) {
+          <p class="admin__empty">No hay reseñas pendientes de moderación.</p>
+        }
+        @for (r of review(); track r.id) {
+          <div class="admin__card">
+            <div class="admin__card-body">
+              <p class="admin__card-comment">{{ r.comment }}</p>
+              <p class="admin__card-meta">⭐ {{ r.rating }} · {{ r.createdAt | date:'shortDate' }}</p>
+              @if (r.flagReason) {
+                <p class="admin__card-flag">Motivo: {{ r.flagReason }}</p>
+              }
+            </div>
+            <div class="admin__card-actions">
+              <button class="admin__btn admin__btn--approve" (click)="approbedReview(r.id)">Aprobar</button>
+              <button class="admin__btn admin__btn--reject" (click)="rejectReview(r.id)">Rechazar</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- PALABRAS PROHIBIDAS -->
+    @if (activeSection() === 'words') {
+      <div class="admin__content">
+        <h1 class="admin__page-title">Palabras prohibidas</h1>
+        <div class="admin__add-form">
+          <input [(ngModel)]="newWord" placeholder="Nueva palabra..." class="admin__input" />
+          <select [(ngModel)]="newSureness" class="admin__select">
+            <option [value]="0">0 — Leve</option>
+            <option [value]="1">1 — Moderada</option>
+            <option [value]="2">2 — Grave</option>
+          </select>
+          <button class="admin__btn admin__btn--approve" (click)="addBannedWord()">Añadir</button>
+        </div>
+        @if (bannedWords().length === 0) {
+          <p class="admin__empty">No hay palabras registradas.</p>
+        }
+        <div class="admin__word-list">
+          @for (w of bannedWords(); track w.id) {
+            <div class="admin__word-row">
+              <span class="admin__word">{{ w.word }}</span>
+              <span class="admin__sureness admin__sureness--{{ w.sureness }}">Nivel {{ w.sureness }}</span>
+              <button class="admin__btn admin__btn--reject" (click)="deleteBannedWord(w.id)">Eliminar</button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+  </main>
+</div>
