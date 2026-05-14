@@ -44,17 +44,17 @@
               <p class="admin__metric-label">Palabras prohibidas</p>
             </div>
           </div>
-          <div class="admin__metric-card admin__metric-card--empty">
+          <div class="admin__metric-card">
             <span class="material-icons admin__metric-icon">people</span>
             <div>
-              <p class="admin__metric-value">—</p>
+              <p class="admin__metric-value">{{ stats()?.totalUsers ?? '—' }}</p>
               <p class="admin__metric-label">Usuarios totales</p>
             </div>
           </div>
-          <div class="admin__metric-card admin__metric-card--empty">
+          <div class="admin__metric-card">
             <span class="material-icons admin__metric-icon">home</span>
             <div>
-              <p class="admin__metric-value">—</p>
+              <p class="admin__metric-value">{{ stats()?.activeRooms ?? '—' }}</p>
               <p class="admin__metric-label">Habitaciones activas</p>
             </div>
           </div>

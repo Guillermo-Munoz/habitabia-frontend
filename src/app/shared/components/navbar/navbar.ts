@@ -35,6 +35,7 @@ export class Navbar implements OnInit{
   notificationOpen = signal(false);
   
   isLoggedIn = () => !!this.authService.getToken();
+  isAdmin = () => this.authService.getRole() === 'ADMIN';
 
   ngOnInit(): void {
     if (!this.authService.getToken()) return;

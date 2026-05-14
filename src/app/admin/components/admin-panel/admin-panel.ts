@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
-import { BannedWord, FlaggedReview } from '../../models/admin.models';
+import { AdminStats, BannedWord, FlaggedReview } from '../../models/admin.models';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -15,6 +15,7 @@ export class AdminPanel implements OnInit{
   private adminService = inject(AdminService);
   bannedWords = signal<BannedWord[]>([]);
   review = signal<FlaggedReview[]>([]);
+  stats = signal<AdminStats | null>(null);
   newWord = '';
   newSureness = 1;
   activeSection = signal('dashboard');
@@ -27,7 +28,11 @@ export class AdminPanel implements OnInit{
     this.adminService.getFlaggedReviews().subscribe({
       next: (data) => this.review.set(data),
       error: () => {}
-    })
+    });
+    this.adminService.getStats().subscribe({
+      next: (data) => this.stats.set(data),
+      error: () => {}
+    });
   }
   approbedReview(id: string){
     this.adminService.approvedReview(id).subscribe({

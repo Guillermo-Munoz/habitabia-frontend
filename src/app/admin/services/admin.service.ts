@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { BannedWord, FlaggedReview } from '../models/admin.models';
+import { map } from 'rxjs/operators';
+import { AdminStats, BannedWord, FlaggedReview, FlaggedReviewPage } from '../models/admin.models';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,12 @@ export class AdminService{
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
+  getStats(): Observable<AdminStats> {
+    return this.http.get<AdminStats>(`${this.apiUrl}/api/v1/admin/stats`);
+  }
   getFlaggedReviews(): Observable<FlaggedReview[]>{
-    return this.http.get<FlaggedReview[]>(`${this.apiUrl}/api/v1/admin/reviews/flagged`);
-
+    return this.http.get<FlaggedReviewPage>(`${this.apiUrl}/api/v1/admin/reviews/flagged`)
+      .pipe(map(page => page.content));
   }
   approvedReview(id: string): Observable<FlaggedReview>{
     return this.http.patch<FlaggedReview>(`${this.apiUrl}/api/v1/admin/reviews/${id}/approve`, {});
