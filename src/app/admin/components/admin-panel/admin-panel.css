@@ -6,6 +6,7 @@
 .admin {
   display: flex;
   height: 100%;
+  overflow: hidden;
   background: #f4f6f9;
 }
 

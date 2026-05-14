@@ -22,6 +22,16 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('authToken');
   }
+  getRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role ?? payload.roles?.[0] ?? null;
+    } catch {
+      return null;
+    }
+  }
   logout(): void {
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);

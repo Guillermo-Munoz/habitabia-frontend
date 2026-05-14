@@ -43,6 +43,9 @@
           <a routerLink="/hosting" (click)="dropdownOpen.set(false)">Gestionar habitaciones</a>
           <a routerLink="/rooms/create" (click)="dropdownOpen.set(false)">Publicar habitación</a>
           <a routerLink="/profile" (click)="dropdownOpen.set(false)">Editar perfil</a>
+          @if (isAdmin()) {
+            <a routerLink="/admin" (click)="dropdownOpen.set(false)">Panel admin</a>
+          }
           <a (click)="logout()">Cerrar sesión</a>
         </div>
       }
