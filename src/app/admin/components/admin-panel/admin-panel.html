@@ -33,7 +33,7 @@
           <div class="admin__metric-card">
             <span class="material-icons admin__metric-icon">rate_review</span>
             <div>
-              <p class="admin__metric-value">{{ review().length }}</p>
+              <p class="admin__metric-value">{{ stats()?.pendingReviews ?? '—' }}</p>
               <p class="admin__metric-label">Reseñas pendientes</p>
             </div>
           </div>
@@ -84,6 +84,17 @@
             </div>
           </div>
         }
+        @if (reviewsTotalPages() > 1) {
+          <div class="admin__pagination">
+            <button class="admin__btn admin__btn--page" [disabled]="reviewsPage() === 0" (click)="loadReviews(reviewsPage() - 1)">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <span class="admin__pagination-info">{{ reviewsPage() + 1 }} / {{ reviewsTotalPages() }}</span>
+            <button class="admin__btn admin__btn--page" [disabled]="reviewsPage() === reviewsTotalPages() - 1" (click)="loadReviews(reviewsPage() + 1)">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        }
       </div>
     }
 
@@ -112,6 +123,17 @@
             </div>
           }
         </div>
+        @if (wordsTotalPages() > 1) {
+          <div class="admin__pagination">
+            <button class="admin__btn admin__btn--page" [disabled]="wordsPage() === 0" (click)="loadWords(wordsPage() - 1)">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <span class="admin__pagination-info">{{ wordsPage() + 1 }} / {{ wordsTotalPages() }}</span>
+            <button class="admin__btn admin__btn--page" [disabled]="wordsPage() === wordsTotalPages() - 1" (click)="loadWords(wordsPage() + 1)">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        }
       </div>
     }
 

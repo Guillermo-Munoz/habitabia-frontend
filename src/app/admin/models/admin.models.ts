@@ -16,6 +16,13 @@ export interface FlaggedReviewPage {
   totalPages: number;
   number: number;
 }
+
+export interface BannedWordPage {
+  content: BannedWord[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+}
 export interface FlaggedReview {
     id: string;
     bookingId: string;
