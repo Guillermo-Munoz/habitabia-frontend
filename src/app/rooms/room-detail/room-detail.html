@@ -138,9 +138,16 @@
         <div class="detail-calendar-placeholder">
           <app-booking-calendar [bookedRanges]="bookedRanges()" (datesSelected)="onDatesSelected($event)" />
         </div>
-        <div class="detail-calendar-placeholder-button">
-          <button class="detail-reservar-btn" (click)="reservar()">Reservar</button>
-        </div>
+        @if (!isHost()) {
+          <div class="detail-calendar-placeholder-button">
+            <button class="detail-reservar-btn" (click)="reservar()">Reservar</button>
+          </div>
+        }
+        @if (isHost()) {
+          <button class="detail-delete-btn" (click)="deleteRoom()">
+            <span class="material-icons">delete</span> Eliminar habitación
+          </button>
+        }
 
         <div id="map" class="detail-map"></div>
 

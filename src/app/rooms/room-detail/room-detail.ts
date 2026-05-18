@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Amenity, Room } from '../models/room.model';
 import { RoomService } from '../services/room.service';
 import { BookingCalendar, Booking as BookedRange } from '../../shared/components/booking-calendar/booking-calendar';
@@ -20,6 +20,7 @@ import * as L from 'leaflet';
 export class RoomDetail implements OnInit {
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private roomService = inject(RoomService);
   private bookingService = inject(BookingService);
   private reviewService = inject(ReviewServices);
@@ -165,6 +166,14 @@ export class RoomDetail implements OnInit {
   }
 
   
+  deleteRoom(): void {
+    if (!window.confirm('¿Eliminar esta habitación? Esta acción no se puede deshacer.')) return;
+    this.roomService.deleteRoom(this.roomId!).subscribe({
+      next: () => this.router.navigate(['/rooms']),
+      error: () => alert('No se pudo eliminar la habitación.')
+    });
+  }
+
   getRoomId(): string | null {
     return this.route.snapshot.paramMap.get('id');
   }

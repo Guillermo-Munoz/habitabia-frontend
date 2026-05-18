@@ -42,5 +42,8 @@ uploadImage(roomId: string, file: File): Observable<void>{
   return this.http.post<void>(`${this.apiUrl}/api/v1/rooms/${roomId}/images`, formData);
 }
 
+deleteRoom(roomId: string): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/api/v1/rooms/${roomId}`);
+}
 
 }

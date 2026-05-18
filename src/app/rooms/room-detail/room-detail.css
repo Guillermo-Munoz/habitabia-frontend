@@ -341,7 +341,7 @@
   cursor: not-allowed;
 }
 
-/* BUTTON */
+/* BUTTONS */
 .detail-reservar-btn {
   width: 100%;
   padding: 14px;
@@ -353,6 +353,27 @@
   font-weight: 700;
   cursor: pointer;
   margin-bottom: 16px;
+}
+
+.detail-delete-btn {
+  width: 100%;
+  padding: 12px;
+  background: #fce4ec;
+  color: #c62828;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.detail-delete-btn:hover {
+  background: #f8bbd0;
 }
 
 
