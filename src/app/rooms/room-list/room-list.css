@@ -159,5 +159,45 @@
     grid-template-columns: repeat(5, 1fr);
 }
 
+}
 
+/* ── PAGINATION ── */
+.rooms-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  flex-wrap: wrap;
+}
+
+.rooms-pagination__btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rooms-pagination__btn:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.rooms-pagination__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.rooms-pagination__btn--active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
 }
