@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Amenity, CreateRoomsRequest, Room } from '../models/room.model';
+import { Amenity, CreateRoomsRequest, Room, RoomPage } from '../models/room.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -14,14 +14,12 @@ export class RoomService {
   private apiUrl = environment.apiUrl;
 
 
-  getAllRooms(city: string | undefined, guests: number | undefined): Observable<Room[]> {
-    const params: any = {};
-
-    if (city) { params[`city`] = city; }
-    if(guests) { params[`guests`] = guests; }
-
-  return this.http.get<Room[]>(`${this.apiUrl}/api/v1/rooms`, {params});
-}
+  getAllRooms(city: string | undefined, guests: number | undefined, page = 0): Observable<RoomPage> {
+    const params: any = { page, size: 12 };
+    if (city) { params['city'] = city; }
+    if (guests) { params['guests'] = guests; }
+    return this.http.get<RoomPage>(`${this.apiUrl}/api/v1/rooms`, { params });
+  }
 
 getCities(): Observable<string[]> {
   return this.http.get<string[]>(`${this.apiUrl}/api/v1/rooms/cities`);

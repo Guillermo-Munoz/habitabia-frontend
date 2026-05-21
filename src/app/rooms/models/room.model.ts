@@ -1,5 +1,12 @@
 export type RoomStatus = 'ACTIVE' | 'INACTIVE' | 'DELETED';
 
+export interface RoomPage {
+  content: Room[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+}
+
 export interface Room {
   id: string;
   hostId: string;
