@@ -23,13 +23,19 @@ export class RoomList {
     effect(() => {
       const city = this.search.city();
       const guests = this.search.guests();
+      const checkIn = this.search.checkIn();
+      const checkOut = this.search.checkOut();
       this.currentPage.set(0);
-      this.loadRooms(city, guests, 0);
+      this.loadRooms(city, guests, checkIn, checkOut, 0);
     });
   }
 
-  loadRooms(city: string | undefined, guests: number | undefined, page: number): void {
-    this.roomService.getAllRooms(city, guests, page).subscribe({
+  loadRooms(city: string, guests: number | undefined, checkIn: string, checkOut: string, page: number): void {
+    const request$ = (checkIn && checkOut)
+      ? this.roomService.getAvailableRooms(checkIn, checkOut, guests, page)
+      : this.roomService.getAllRooms(city, guests, page);
+
+    request$.subscribe({
       next: (data) => {
         this.rooms.set(data.content);
         this.currentPage.set(data.number);
@@ -40,7 +46,11 @@ export class RoomList {
   }
 
   goToPage(page: number): void {
-    this.loadRooms(this.search.city(), this.search.guests(), page);
+    this.loadRooms(
+      this.search.city(), this.search.guests(),
+      this.search.checkIn(), this.search.checkOut(),
+      page
+    );
   }
 
   getStars(rating: number): string[] {

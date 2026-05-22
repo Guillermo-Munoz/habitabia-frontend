@@ -21,6 +21,12 @@ export class RoomService {
     return this.http.get<RoomPage>(`${this.apiUrl}/api/v1/rooms`, { params });
   }
 
+  getAvailableRooms(checkIn: string, checkOut: string, guests: number | undefined, page = 0): Observable<RoomPage> {
+    const params: any = { checkIn, checkOut, page, size: 12 };
+    if (guests) { params['guests'] = guests; }
+    return this.http.get<RoomPage>(`${this.apiUrl}/api/v1/rooms/available`, { params });
+  }
+
 getCities(): Observable<string[]> {
   return this.http.get<string[]>(`${this.apiUrl}/api/v1/rooms/cities`);
 }

@@ -33,4 +33,26 @@ export class Filters implements OnInit {
     const guests = parseInt(inputElement.value, 10);
     this.search.guests.set(guests);
   }
+
+  onCheckInChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.search.checkIn.set(value);
+    if (!value) this.search.checkOut.set('');
+  }
+
+  onCheckOutChange(event: Event): void {
+    this.search.checkOut.set((event.target as HTMLInputElement).value);
+  }
+
+  get today(): string {
+    return new Date().toLocaleDateString('sv');
+  }
+
+  get minCheckOut(): string {
+    const ci = this.search.checkIn();
+    if (!ci) return this.today;
+    const d = new Date(ci);
+    d.setDate(d.getDate() + 1);
+    return d.toLocaleDateString('sv');
+  }
 }

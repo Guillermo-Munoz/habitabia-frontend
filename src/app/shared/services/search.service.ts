@@ -5,7 +5,8 @@ import { Injectable, signal } from "@angular/core";
 })
 
 export class SearchService {
-city = signal<string>('');
-guests = signal<number | undefined>(undefined);
-
+  city = signal<string>('');
+  guests = signal<number | undefined>(undefined);
+  checkIn = signal<string>('');
+  checkOut = signal<string>('');
 }
