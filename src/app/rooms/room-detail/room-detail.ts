@@ -7,6 +7,7 @@ import { Booking as BookingService } from '../services/booking';
 import { ReviewServices } from '../../reviews/services/review.services';
 import { Review } from '../../reviews/models/rating.model';
 import { UserService } from '../../users/services/user.service';
+import { ModalService } from '../../shared/services/modal.service';
 import { FormsModule } from '@angular/forms';
 
 import * as L from 'leaflet';
@@ -22,6 +23,7 @@ export class RoomDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private roomService = inject(RoomService);
+  private modal = inject(ModalService);
   private bookingService = inject(BookingService);
   private reviewService = inject(ReviewServices);
   private userService = inject(UserService);
@@ -104,7 +106,7 @@ export class RoomDetail implements OnInit {
         );
         this.cancelRespond();
       },
-      error: () => alert('No se pudo enviar la respuesta')
+      error: () => this.modal.alert('No se pudo enviar la respuesta.')
     });
   }
 
@@ -167,10 +169,12 @@ export class RoomDetail implements OnInit {
 
   
   deleteRoom(): void {
-    if (!window.confirm('¿Eliminar esta habitación? Esta acción no se puede deshacer.')) return;
-    this.roomService.deleteRoom(this.roomId!).subscribe({
-      next: () => this.router.navigate(['/rooms']),
-      error: () => alert('No se pudo eliminar la habitación.')
+    this.modal.confirm('¿Eliminar esta habitación? Esta acción no se puede deshacer.', 'Eliminar', 'Cancelar').then(ok => {
+      if (!ok) return;
+      this.roomService.deleteRoom(this.roomId!).subscribe({
+        next: () => this.router.navigate(['/rooms']),
+        error: () => this.modal.alert('No se pudo eliminar la habitación.')
+      });
     });
   }
 
@@ -200,8 +204,8 @@ export class RoomDetail implements OnInit {
   const checkOut = this.selectedDates.endDate.toLocaleDateString('sv');
   
   this.bookingService.createBooking(this.roomId!, this.room()!.hostId, checkIn, checkOut).subscribe({
-    next: () => alert('Reserva creada'),
-    error: () => alert('Error al reservar')
+    next: () => this.modal.alert('Reserva creada con éxito.'),
+    error: () => this.modal.alert('Error al reservar. Comprueba las fechas seleccionadas.')
     
   });
   

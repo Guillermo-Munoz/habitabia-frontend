@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Message } from '../../models/message.model';
 import { UserService } from '../../../users/services/user.service';
 import { FormsModule } from '@angular/forms';
+import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-message-view',
@@ -17,6 +18,7 @@ export class MessageView implements OnInit, AfterViewChecked {
   private messageService = inject(MessageServices);
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
+  private modal = inject(ModalService);
   newMessage = '';
   messages = signal<Message[]>([]);
   currentUserId = signal<string | null>(null);
@@ -54,8 +56,8 @@ export class MessageView implements OnInit, AfterViewChecked {
         this.newMessage = '';
       },
       error: (err) => {
-        if (err.status === 409) alert('Mensaje bloqueado: contiene lenguaje inapropiado.');
-        else alert('No se pudo enviar el mensaje.');
+        if (err.status === 409) this.modal.alert('Mensaje bloqueado: contiene lenguaje inapropiado.');
+        else this.modal.alert('No se pudo enviar el mensaje.');
         this.newMessage = '';
       }
     });
