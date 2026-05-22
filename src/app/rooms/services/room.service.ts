@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Amenity, CreateRoomsRequest, Room, RoomPage } from '../models/room.model';
+import { Amenity, CreateRoomsRequest, Room, RoomPage, UpdateRoomRequest } from '../models/room.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -44,6 +44,10 @@ uploadImage(roomId: string, file: File): Observable<void>{
   const formData = new FormData();
   formData.append('file', file);
   return this.http.post<void>(`${this.apiUrl}/api/v1/rooms/${roomId}/images`, formData);
+}
+
+updateRoom(roomId: string, data: UpdateRoomRequest): Observable<Room> {
+  return this.http.patch<Room>(`${this.apiUrl}/api/v1/rooms/${roomId}`, data);
 }
 
 deleteRoom(roomId: string): Observable<void> {
