@@ -34,13 +34,37 @@
   border-color: var(--color-primary);
 }
 
+.filters__date {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius-btn);
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filters__date:focus {
+  border-color: var(--color-primary);
+}
+
+.filters__date:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 @media (min-width: 768px) {
   .filters {
-    max-width: 560px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
-  .filters__select {
-    max-width: 260px;
+  .filters__select,
+  .filters__date {
+    max-width: 200px;
   }
 }

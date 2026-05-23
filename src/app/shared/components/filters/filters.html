@@ -18,4 +18,11 @@
     <option value="6">6 huéspedes</option>
     <option value="7">7+ huéspedes</option>
   </select>
+
+  <input class="filters__date" type="date" [min]="today"
+         placeholder="Entrada" (change)="onCheckInChange($event)" />
+
+  <input class="filters__date" type="date" [min]="minCheckOut"
+         [disabled]="!search.checkIn()"
+         placeholder="Salida" (change)="onCheckOutChange($event)" />
 </div>

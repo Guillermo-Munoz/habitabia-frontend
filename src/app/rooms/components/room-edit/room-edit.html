@@ -1,0 +1,116 @@
+@if (loading()) {
+  <p class="create__loading">Cargando...</p>
+} @else {
+<div class="create">
+  <div class="create__header">
+    <button class="create__back" type="button" (click)="cancel()">&#8249;</button>
+    <h2 class="create__title">Editar habitación</h2>
+  </div>
+
+  <form class="create__form" (ngSubmit)="submit()" #roomForm="ngForm">
+
+    <div class="create__section">
+      <h3 class="create__section-title">Información básica</h3>
+
+      <div class="create__field">
+        <label class="create__label" for="title">Título *</label>
+        <input class="create__input" type="text" id="title" name="title"
+          [(ngModel)]="formData.title" required #title="ngModel"
+          placeholder="Ej: Habitación luminosa en el centro">
+        @if (title.invalid && title.touched) {
+          <span class="create__error">El título es requerido</span>
+        }
+      </div>
+
+      <div class="create__field">
+        <label class="create__label" for="description">Descripción</label>
+        <textarea class="create__input create__input--textarea" id="description" name="description"
+          [(ngModel)]="formData.description" rows="4"
+          placeholder="Describe tu habitación..."></textarea>
+      </div>
+
+      <div class="create__field">
+        <label class="create__label" for="maxGuests">Máximo de huéspedes *</label>
+        <input class="create__input" type="number" id="maxGuests" name="maxGuests"
+          [(ngModel)]="formData.maxGuests" required min="1" max="10" #maxGuests="ngModel">
+        @if (maxGuests.invalid && maxGuests.touched) {
+          <span class="create__error">Debe ser entre 1 y 10</span>
+        }
+      </div>
+    </div>
+
+    <div class="create__section">
+      <h3 class="create__section-title">Ubicación</h3>
+
+      <div class="create__field">
+        <label class="create__label" for="street">Calle</label>
+        <input class="create__input" type="text" id="street" name="street"
+          [(ngModel)]="formData.street" placeholder="Calle Mayor 1">
+      </div>
+
+      <div class="create__row">
+        <div class="create__field">
+          <label class="create__label" for="city">Ciudad *</label>
+          <input class="create__input" type="text" id="city" name="city"
+            [(ngModel)]="formData.city" required #city="ngModel" placeholder="Madrid">
+          @if (city.invalid && city.touched) {
+            <span class="create__error">La ciudad es requerida</span>
+          }
+        </div>
+        <div class="create__field">
+          <label class="create__label" for="country">País *</label>
+          <input class="create__input" type="text" id="country" name="country"
+            [(ngModel)]="formData.country" required #country="ngModel" placeholder="España">
+          @if (country.invalid && country.touched) {
+            <span class="create__error">El país es requerido</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="create__section">
+      <h3 class="create__section-title">Precio</h3>
+      <div class="create__row">
+        <div class="create__field">
+          <label class="create__label" for="price">Precio por noche *</label>
+          <input class="create__input" type="number" id="price" name="priceAmount"
+            [(ngModel)]="formData.priceAmount" required min="1" #price="ngModel">
+          @if (price.invalid && price.touched) {
+            <span class="create__error">Introduce un precio válido</span>
+          }
+        </div>
+        <div class="create__field">
+          <label class="create__label" for="currency">Moneda</label>
+          <select class="create__input" id="currency" name="priceCurrency"
+            [(ngModel)]="formData.priceCurrency">
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="create__section">
+      <h3 class="create__section-title">Amenidades</h3>
+      <div class="create__amenities">
+        @for (a of allAmenities; track a.value) {
+          <button type="button" class="create__amenity"
+            [class.create__amenity--selected]="isSelected(a.value)"
+            (click)="toggleAmenity(a.value)">
+            {{ a.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="create__actions">
+      <button class="create__btn create__btn--cancel" type="button" (click)="cancel()">Cancelar</button>
+      <button class="create__btn create__btn--submit" type="submit" [disabled]="roomForm.invalid || submitting()">
+        {{ submitting() ? 'Guardando...' : 'Guardar cambios' }}
+      </button>
+    </div>
+
+  </form>
+</div>
+}

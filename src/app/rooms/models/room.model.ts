@@ -38,6 +38,18 @@ export type Amenity =
   | 'STUDY_DESK'
   | 'BIKE_PARKING';
 
+  export interface UpdateRoomRequest {
+  title: string;
+  description: string;
+  street: string;
+  city: string;
+  country: string;
+  priceAmount: number;
+  priceCurrency: string;
+  maxGuests: number;
+  amenities: Amenity[];
+}
+
   export interface CreateRoomsRequest{
   title: string;
   description: string;

@@ -144,6 +144,9 @@
           </div>
         }
         @if (isHost()) {
+          <button class="detail-edit-btn" [routerLink]="['/rooms/edit', room()!.id]">
+            <span class="material-icons">edit</span> Editar habitación
+          </button>
           <button class="detail-delete-btn" (click)="deleteRoom()">
             <span class="material-icons">delete</span> Eliminar habitación
           </button>

@@ -4,6 +4,7 @@ import { StatePiped } from '../../../shared/pipes/booking-status.pipe';
 import { ReservationService } from '../../services/booking.service';
 import { Reservation } from '../../models/reservation.model';
 import { Observable } from 'rxjs';
+import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-host-bookings',
@@ -12,33 +13,31 @@ import { Observable } from 'rxjs';
   styleUrl: './host-bookings.css',
 })
 export class HostBookings implements OnInit {
+  reservationSvc = inject(ReservationService);
+  private modal = inject(ModalService);
+  reservations = signal<Reservation[]>([]);
 
-    reservationSvc = inject(ReservationService);
-    reservations = signal<Reservation[]>([]);
-
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.reservationSvc.getMyBookingsAsHost().subscribe({
-      next: (data) => {
-        this.reservations.set(data)
-      },
+      next: (data) => this.reservations.set(data),
       error: (err) => console.error('Error cargando reservas', err)
-
-    })
+    });
   }
-    updateStatus(id: string, action: (id: string) => Observable<Reservation>, errorMsg: string) {
+
+  updateStatus(id: string, action: (id: string) => Observable<Reservation>, errorMsg: string) {
     action(id).subscribe({
       next: (update) => {
         this.reservations.update(list =>
           list.map(s => s.id === id ? { ...s, ...update } : s)
         );
       },
-      error: () => alert(errorMsg)
+      error: () => this.modal.alert(errorMsg)
     });
   }
-  confirm(msg: string, id: string, action: (id: string) => Observable<Reservation>, errorMsg: string) {
-    if (window.confirm(msg)) {
-      this.updateStatus(id, action, errorMsg);
-    }
-  }
 
+  confirm(msg: string, id: string, action: (id: string) => Observable<Reservation>, errorMsg: string) {
+    this.modal.confirm(msg).then(ok => {
+      if (ok) this.updateStatus(id, action, errorMsg);
+    });
+  }
 }

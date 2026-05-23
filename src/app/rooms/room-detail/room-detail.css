@@ -355,6 +355,28 @@
   margin-bottom: 16px;
 }
 
+.detail-edit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #e3f2fd;
+  color: #1565c0;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+  text-decoration: none;
+}
+
+.detail-edit-btn:hover {
+  background: #bbdefb;
+}
+
 .detail-delete-btn {
   width: 100%;
   padding: 12px;

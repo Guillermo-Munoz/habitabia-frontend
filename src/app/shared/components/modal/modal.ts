@@ -1,0 +1,11 @@
+import { Component, inject } from '@angular/core';
+import { ModalService } from '../../services/modal.service';
+
+@Component({
+  selector: 'app-modal',
+  templateUrl: './modal.html',
+  styleUrl: './modal.css',
+})
+export class Modal {
+  modal = inject(ModalService);
+}
