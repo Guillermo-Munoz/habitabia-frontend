@@ -11,7 +11,7 @@ import { SearchService } from '../../services/search.service';
 })
 export class Filters implements OnInit {
   private cities = inject(RoomService).getCities();
-  private search = inject(SearchService)
+  search = inject(SearchService)
   citiesList = signal<string[]>([]);
 
   ngOnInit(): void {
@@ -37,7 +37,10 @@ export class Filters implements OnInit {
   onCheckInChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.search.checkIn.set(value);
-    if (!value) this.search.checkOut.set('');
+    const currentCheckOut = this.search.checkOut();
+    if (!value || (currentCheckOut && currentCheckOut <= value)) {
+      this.search.checkOut.set('');
+    }
   }
 
   onCheckOutChange(event: Event): void {

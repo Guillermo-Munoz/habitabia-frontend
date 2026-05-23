@@ -35,4 +35,7 @@ export class ModalService {
       });
     });
   }
+
+  dismiss(): void { this.state()?.resolve(false); }
+  ok(): void { this.state()?.resolve(true); }
 }

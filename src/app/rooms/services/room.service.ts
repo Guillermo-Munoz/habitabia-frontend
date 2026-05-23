@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Amenity, CreateRoomsRequest, Room, RoomPage, UpdateRoomRequest } from '../models/room.model';
+import { Amenity, CreateRoomsRequest, Room, UpdateRoomRequest } from '../models/room.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -14,17 +14,17 @@ export class RoomService {
   private apiUrl = environment.apiUrl;
 
 
-  getAllRooms(city: string | undefined, guests: number | undefined, page = 0): Observable<RoomPage> {
-    const params: any = { page, size: 12 };
+  getAllRooms(city: string | undefined, guests: number | undefined): Observable<Room[]> {
+    const params: any = {};
     if (city) { params['city'] = city; }
     if (guests) { params['guests'] = guests; }
-    return this.http.get<RoomPage>(`${this.apiUrl}/api/v1/rooms`, { params });
+    return this.http.get<Room[]>(`${this.apiUrl}/api/v1/rooms`, { params });
   }
 
-  getAvailableRooms(checkIn: string, checkOut: string, guests: number | undefined, page = 0): Observable<RoomPage> {
-    const params: any = { checkIn, checkOut, page, size: 12 };
+  getAvailableRooms(checkIn: string, checkOut: string, guests: number | undefined): Observable<Room[]> {
+    const params: any = { checkIn, checkOut };
     if (guests) { params['guests'] = guests; }
-    return this.http.get<RoomPage>(`${this.apiUrl}/api/v1/rooms/available`, { params });
+    return this.http.get<Room[]>(`${this.apiUrl}/api/v1/rooms/available`, { params });
   }
 
 getCities(): Observable<string[]> {

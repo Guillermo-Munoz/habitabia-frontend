@@ -24,5 +24,6 @@
 
   <input class="filters__date" type="date" [min]="minCheckOut"
          [disabled]="!search.checkIn()"
+         [value]="search.checkOut()"
          placeholder="Salida" (change)="onCheckOutChange($event)" />
 </div>

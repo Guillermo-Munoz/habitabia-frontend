@@ -7,6 +7,10 @@
   <app-filters/>
 </div>
 
+@if (loadError()) {
+  <p style="color:red; padding: 16px;">{{ loadError() }}</p>
+}
+
 <div class="rooms-grid">
 @for (room of rooms(); track room.id) {
   <article class="room-card">

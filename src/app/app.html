@@ -2,4 +2,21 @@
   <app-navbar />
 }
 <router-outlet />
-<app-modal />
+
+@if (modal.state(); as state) {
+  <div class="modal-backdrop" (click)="modal.dismiss()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <p class="modal-box__message">{{ state.message }}</p>
+      <div class="modal-box__actions">
+        @if (state.type === 'confirm') {
+          <button class="modal-box__btn modal-box__btn--cancel" (click)="modal.dismiss()">
+            {{ state.cancelLabel }}
+          </button>
+        }
+        <button class="modal-box__btn modal-box__btn--confirm" (click)="modal.ok()">
+          {{ state.confirmLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
