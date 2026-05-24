@@ -41,20 +41,3 @@
 }
 </div>
 
-@if (totalPages() > 1) {
-  <div class="rooms-pagination">
-    <button class="rooms-pagination__btn" [disabled]="currentPage() === 0" (click)="goToPage(currentPage() - 1)">
-      <span class="material-icons">chevron_left</span>
-    </button>
-    @for (p of [].constructor(totalPages()); track $index) {
-      <button class="rooms-pagination__btn rooms-pagination__btn--page"
-              [class.rooms-pagination__btn--active]="$index === currentPage()"
-              (click)="goToPage($index)">
-        {{ $index + 1 }}
-      </button>
-    }
-    <button class="rooms-pagination__btn" [disabled]="currentPage() === totalPages() - 1" (click)="goToPage(currentPage() + 1)">
-      <span class="material-icons">chevron_right</span>
-    </button>
-  </div>
-}

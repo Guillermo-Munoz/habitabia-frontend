@@ -1,6 +1,6 @@
 <div class="filters">
   <select class="filters__select" (change)="onCityChange($event)">
-    <option value="">Todas las ciudades</option>
+    <option value="">Ciudad</option>
     @for (city of citiesList(); track city) {
       <option [value]="city">{{ city }}</option>
     } @empty {
@@ -9,7 +9,7 @@
   </select>
 
   <select class="filters__select" (change)="onGuestsChange($event)">
-    <option value="">Todos los huéspedes</option>
+    <option value="">Huéspedes</option>
     <option value="1">1 huésped</option>
     <option value="2">2 huéspedes</option>
     <option value="3">3 huéspedes</option>
@@ -19,11 +19,16 @@
     <option value="7">7+ huéspedes</option>
   </select>
 
-  <input class="filters__date" type="date" [min]="today"
-         placeholder="Entrada" (change)="onCheckInChange($event)" />
+  <div class="filters__date-wrapper" data-placeholder="Desde"
+       [class.has-value]="search.checkIn()">
+    <input class="filters__date" type="date" [min]="today" (change)="onCheckInChange($event)" />
+  </div>
 
-  <input class="filters__date" type="date" [min]="minCheckOut"
-         [disabled]="!search.checkIn()"
-         [value]="search.checkOut()"
-         placeholder="Salida" (change)="onCheckOutChange($event)" />
+  <div class="filters__date-wrapper" data-placeholder="Hasta"
+       [class.has-value]="search.checkOut()" [class.is-disabled]="!search.checkIn()">
+    <input class="filters__date" type="date" [min]="minCheckOut"
+           [disabled]="!search.checkIn()"
+           [value]="search.checkOut()"
+           (change)="onCheckOutChange($event)" />
+  </div>
 </div>

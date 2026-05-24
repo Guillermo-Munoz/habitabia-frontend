@@ -16,8 +16,6 @@ export class RoomList {
   private search = inject(SearchService);
 
   rooms = signal<Room[]>([]);
-  currentPage = signal(0);
-  totalPages = signal(1);
   loadError = signal<string | null>(null);
 
   constructor() {
@@ -26,7 +24,6 @@ export class RoomList {
       const guests = this.search.guests();
       const checkIn = this.search.checkIn();
       const checkOut = this.search.checkOut();
-      this.currentPage.set(0);
       this.loadRooms(city, guests, checkIn, checkOut);
     });
   }
@@ -37,8 +34,6 @@ export class RoomList {
         next: (rooms) => {
           this.loadError.set(null);
           this.rooms.set(rooms);
-          this.currentPage.set(0);
-          this.totalPages.set(1);
         },
         error: (err) => {
           console.error('Error cargando habitaciones:', err);
@@ -50,8 +45,6 @@ export class RoomList {
         next: (rooms) => {
           this.loadError.set(null);
           this.rooms.set(rooms);
-          this.currentPage.set(0);
-          this.totalPages.set(1);
         },
         error: (err) => {
           console.error('Error cargando habitaciones:', err);
@@ -59,13 +52,6 @@ export class RoomList {
         }
       });
     }
-  }
-
-  goToPage(): void {
-    this.loadRooms(
-      this.search.city(), this.search.guests(),
-      this.search.checkIn(), this.search.checkOut()
-    );
   }
 
   getStars(rating: number): string[] {
