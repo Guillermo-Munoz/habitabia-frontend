@@ -1,7 +1,7 @@
 .navbar {
     background-color: var(--color-navbar);
-    padding: 0 40px;
-    height: 100px;
+    padding: 0 16px;
+    height: 64px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -185,6 +185,13 @@
     color: #999;
     text-align: center;
     margin: 0;
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        padding: 0 40px;
+        height: 80px;
+    }
 }
 
 @media (min-width: 900px) {

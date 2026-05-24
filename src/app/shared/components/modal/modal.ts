@@ -3,9 +3,18 @@ import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-modal',
+  standalone: true,
   templateUrl: './modal.html',
   styleUrl: './modal.css',
 })
 export class Modal {
-  modal = inject(ModalService);
+  protected readonly modal = inject(ModalService);
+
+  dismiss(): void {
+    this.modal.state()?.resolve(false);
+  }
+
+  ok(): void {
+    this.modal.state()?.resolve(true);
+  }
 }

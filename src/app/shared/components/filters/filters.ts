@@ -1,17 +1,16 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { RoomService } from '../../../rooms/services/room.service';
 import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-filters',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './filters.html',
   styleUrl: './filters.css',
 })
 export class Filters implements OnInit {
   private cities = inject(RoomService).getCities();
-  private search = inject(SearchService)
+  search = inject(SearchService)
   citiesList = signal<string[]>([]);
 
   ngOnInit(): void {
@@ -37,7 +36,10 @@ export class Filters implements OnInit {
   onCheckInChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.search.checkIn.set(value);
-    if (!value) this.search.checkOut.set('');
+    const currentCheckOut = this.search.checkOut();
+    if (!value || (currentCheckOut && currentCheckOut <= value)) {
+      this.search.checkOut.set('');
+    }
   }
 
   onCheckOutChange(event: Event): void {

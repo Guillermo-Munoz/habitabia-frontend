@@ -16,8 +16,7 @@ export class RoomList {
   private search = inject(SearchService);
 
   rooms = signal<Room[]>([]);
-  currentPage = signal(0);
-  totalPages = signal(1);
+  loadError = signal<string | null>(null);
 
   constructor() {
     effect(() => {
@@ -25,32 +24,34 @@ export class RoomList {
       const guests = this.search.guests();
       const checkIn = this.search.checkIn();
       const checkOut = this.search.checkOut();
-      this.currentPage.set(0);
-      this.loadRooms(city, guests, checkIn, checkOut, 0);
+      this.loadRooms(city, guests, checkIn, checkOut);
     });
   }
 
-  loadRooms(city: string, guests: number | undefined, checkIn: string, checkOut: string, page: number): void {
-    const request$ = (checkIn && checkOut)
-      ? this.roomService.getAvailableRooms(checkIn, checkOut, guests, page)
-      : this.roomService.getAllRooms(city, guests, page);
-
-    request$.subscribe({
-      next: (data) => {
-        this.rooms.set(data.content);
-        this.currentPage.set(data.number);
-        this.totalPages.set(data.totalPages);
-      },
-      error: (err) => console.error('Error:', err)
-    });
-  }
-
-  goToPage(page: number): void {
-    this.loadRooms(
-      this.search.city(), this.search.guests(),
-      this.search.checkIn(), this.search.checkOut(),
-      page
-    );
+  loadRooms(city: string, guests: number | undefined, checkIn: string, checkOut: string): void {
+    if (checkIn && checkOut) {
+      this.roomService.getAvailableRooms(checkIn, checkOut, guests).subscribe({
+        next: (rooms) => {
+          this.loadError.set(null);
+          this.rooms.set(rooms);
+        },
+        error: (err) => {
+          console.error('Error cargando habitaciones:', err);
+          this.loadError.set(`Error ${err.status}: ${err.message}`);
+        }
+      });
+    } else {
+      this.roomService.getAllRooms(city, guests).subscribe({
+        next: (rooms) => {
+          this.loadError.set(null);
+          this.rooms.set(rooms);
+        },
+        error: (err) => {
+          console.error('Error cargando habitaciones:', err);
+          this.loadError.set(`Error ${err.status}: ${err.message}`);
+        }
+      });
+    }
   }
 
   getStars(rating: number): string[] {

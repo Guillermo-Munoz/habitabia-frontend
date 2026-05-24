@@ -1,17 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './shared/components/navbar/navbar';
-import { Modal } from './shared/components/modal/modal';
+import { ModalService } from './shared/services/modal.service';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, Modal],
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   private router = inject(Router);
+  protected readonly modal = inject(ModalService);
   showNavbar = signal(true);
 
   constructor() {
