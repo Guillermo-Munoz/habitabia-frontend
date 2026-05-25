@@ -1,6 +1,6 @@
 :host {
   display: block;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 80px);
 }
 
 .admin {
@@ -315,7 +315,7 @@
 
   .admin {
     flex-direction: column;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 64px);
   }
 
   .admin__sidebar {

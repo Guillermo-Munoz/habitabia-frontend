@@ -14,7 +14,7 @@
       @if (isEditMode()) {
         <input class="profile-field__input" [(ngModel)]="editFormData.fullName" />    
       }@else {
-        <span class="profile-field__value">{{ editFormData.fullName ?? '—' }}</span>
+        <span class="profile-field__value">{{ editFormData.fullName || '—' }}</span>
       }
     </div>
 
@@ -28,7 +28,7 @@
       @if (isEditMode()) {
         <input class="profile-field__input" [(ngModel)]="editFormData.bio" />    
       }@else {
-        <span class="profile-field__value">{{ editFormData.bio ?? '—' }}</span>
+        <span class="profile-field__value">{{ editFormData.bio || '—' }}</span>
       }
     </div>
 

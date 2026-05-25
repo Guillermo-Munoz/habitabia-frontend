@@ -12,6 +12,8 @@
 }
 
 .filters__select {
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px 3px 10px 14px;
   border: 1px solid #e0e0e0;
   border-radius: var(--border-radius-btn);
@@ -25,6 +27,7 @@
   background-repeat: no-repeat;
   background-position: right 14px center;
   transition: border-color 0.2s;
+  min-width: 0;
 }
 
 .filters__select:focus {
@@ -33,6 +36,7 @@
 
 .filters__date-wrapper {
   position: relative;
+  min-width: 0;
 }
 
 .filters__date-wrapper::before {
