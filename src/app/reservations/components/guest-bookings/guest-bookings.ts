@@ -40,4 +40,18 @@ export class GuestBookings implements OnInit{
       });
     });
   }
+
+  confirmStay(id: string) {
+    this.modal.confirm('¿Confirmar tu estancia?').then(ok => {
+      if (!ok) return;
+      this.reservation.confirm(id).subscribe({
+        next: (update) => {
+          this.reservations.update(list =>
+            list.map(s => s.id === id ? update : s)
+          );
+        },
+        error: () => this.modal.alert('No se pudo confirmar la estancia.')
+      });
+    });
+  }
 }
