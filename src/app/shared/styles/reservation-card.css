@@ -96,9 +96,11 @@
   border-radius: 6px;
 }
 
-.status--requested { background: #fff3cd; color: #856404; }
-.status--accepted  { background: #d1e7dd; color: #0a5e35; }
-.status--cancelled { background: #f8d7da; color: #842029; }
+.status--requested  { background: #fff3cd; color: #856404; }
+.status--accepted   { background: #d1e7dd; color: #0a5e35; }
+.status--confirmed  { background: #cce5ff; color: #004085; }
+.status--cancelled  { background: #f8d7da; color: #842029; }
+.status--completed  { background: #e2e3e5; color: #383d41; }
 
 .reservation-card__btn--cancel {
   display: flex;
@@ -125,7 +127,8 @@
 
 .reservation-card__btn--accept,
 .reservation-card__btn--reject,
-.reservation-card__btn--complete {
+.reservation-card__btn--complete,
+.reservation-card__btn--confirm {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,6 +144,7 @@
 .reservation-card__btn--accept,
 .reservation-card__btn--reject,
 .reservation-card__btn--complete,
+.reservation-card__btn--confirm,
 .reservation-card__btn--cancel {
   .material-icons { font-size: 14px; }
 }
@@ -153,6 +157,9 @@
 
 .reservation-card__btn--complete { border: 1px solid #1565c0; color: #1565c0; }
 .reservation-card__btn--complete:hover { background: #e3f2fd; }
+
+.reservation-card__btn--confirm { border: 1px solid #00796b; color: #00796b; }
+.reservation-card__btn--confirm:hover { background: #e0f2f1; }
 
 .reservation-card__btn--messages {
   display: flex;

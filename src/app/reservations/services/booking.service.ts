@@ -37,4 +37,8 @@ export class ReservationService {
         return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/complete`, {});
     }
 
+    confirm(id: string): Observable<Reservation> {
+        return this.http.patch<Reservation>(`${this.apiUrl}/api/v1/bookings/${id}/confirm`, {});
+    }
+
 }

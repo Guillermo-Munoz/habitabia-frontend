@@ -26,7 +26,9 @@
         <div class="reservation-card__status"
           [class.status--requested]="reservation.status === 'REQUESTED'"
           [class.status--accepted]="reservation.status === 'ACCEPTED'"
-          [class.status--cancelled]="reservation.status === 'CANCELLED'">
+          [class.status--confirmed]="reservation.status === 'CONFIRMED'"
+          [class.status--cancelled]="reservation.status === 'CANCELLED'"
+          [class.status--completed]="reservation.status === 'COMPLETED'">
           {{reservation.status | bookingStatus}}
         </div>
         <a class="reservation-card__btn--messages" [routerLink]="['/messages', reservation.id]">

@@ -5,11 +5,12 @@ export class StatePiped implements PipeTransform {
   transform(value: string): string {
    
     const map: Record<string, string> = {
-        REQUESTED: 'Pendiente',
-        ACCEPTED:  'Aceptada',
-        CANCELLED: 'Cancelada',
+        REQUESTED:  'Pendiente',
+        ACCEPTED:   'Aceptada',
+        CONFIRMED:  'Confirmada',
+        CANCELLED:  'Cancelada',
         COMPLETED:  'Completada',
-        REJECTED:  'Rechazada' 
+        REJECTED:   'Rechazada'
         };
     return map[value] ?? value;
 
