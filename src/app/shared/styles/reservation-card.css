@@ -186,6 +186,39 @@
 }
 
 
+/* ── EMPTY STATE ── */
+.reservations-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+.reservations-empty__icon {
+  font-size: 3rem;
+  color: #ccc;
+}
+
+.reservations-empty__text {
+  margin: 0;
+  font-size: 1rem;
+  color: #888;
+}
+
+.reservations-empty__link {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.reservations-empty__link:hover {
+  text-decoration: underline;
+}
+
 /* ================================================= */
 /* MEDIA QUERIES */
 /* ================================================= */
