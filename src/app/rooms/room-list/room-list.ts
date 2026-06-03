@@ -17,6 +17,8 @@ export class RoomList {
 
   rooms = signal<Room[]>([]);
   loadError = signal<string | null>(null);
+  loading = signal(true);
+  skeletons = Array(6);
 
   constructor() {
     effect(() => {
@@ -29,15 +31,18 @@ export class RoomList {
   }
 
   loadRooms(city: string, guests: number | undefined, checkIn: string, checkOut: string): void {
+    this.loading.set(true);
     if (checkIn && checkOut) {
       this.roomService.getAvailableRooms(checkIn, checkOut, guests).subscribe({
         next: (rooms) => {
           this.loadError.set(null);
           this.rooms.set(rooms);
+          this.loading.set(false);
         },
         error: (err) => {
           console.error('Error cargando habitaciones:', err);
           this.loadError.set(`Error ${err.status}: ${err.message}`);
+          this.loading.set(false);
         }
       });
     } else {
@@ -45,10 +50,12 @@ export class RoomList {
         next: (rooms) => {
           this.loadError.set(null);
           this.rooms.set(rooms);
+          this.loading.set(false);
         },
         error: (err) => {
           console.error('Error cargando habitaciones:', err);
           this.loadError.set(`Error ${err.status}: ${err.message}`);
+          this.loading.set(false);
         }
       });
     }

@@ -11,7 +11,23 @@
   <p style="color:red; padding: 16px;">{{ loadError() }}</p>
 }
 
-<div class="rooms-grid">
+@if (loading()) {
+  <div class="rooms-grid">
+    @for (s of skeletons; track $index) {
+      <div class="room-card room-card--skeleton">
+        <div class="skeleton skeleton--img"></div>
+        <div class="room-card__body">
+          <div class="skeleton skeleton--title"></div>
+          <div class="skeleton skeleton--line"></div>
+          <div class="skeleton skeleton--line skeleton--line-short"></div>
+          <div class="skeleton skeleton--btn"></div>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+<div class="rooms-grid" [class.rooms-grid--hidden]="loading()">
 @for (room of rooms(); track room.id) {
   <article class="room-card">
     <div class="room-card__image">
