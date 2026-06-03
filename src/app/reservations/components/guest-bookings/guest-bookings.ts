@@ -16,15 +16,18 @@ export class GuestBookings implements OnInit{
     private reservation = inject(ReservationService);
     private modal = inject(ModalService);
     reservations = signal<Reservation[]>([]);
-
+    loading = signal(true);
 
   ngOnInit(): void {
     this.reservation.getMyBooking().subscribe({
       next: (reservation) => {
-        this.reservations.set(reservation)
+        this.reservations.set(reservation);
+        this.loading.set(false);
       },
-      error: (err) => console.error('Error cargando reservas', err)
-
+      error: (err) => {
+        console.error('Error cargando reservas', err);
+        this.loading.set(false);
+      }
     })
   }
   cancelReservation(id: string, msg: string){

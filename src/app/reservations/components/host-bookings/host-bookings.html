@@ -1,4 +1,10 @@
-<div class="reservations-list">
+@if (loading()) {
+  <div class="reservations-spinner">
+    <div class="spinner"></div>
+  </div>
+}
+
+<div class="reservations-list" [class.reservations-list--hidden]="loading()">
 @for (reservation of reservations(); track reservation.id) {
   <div class="reservation-card">
 

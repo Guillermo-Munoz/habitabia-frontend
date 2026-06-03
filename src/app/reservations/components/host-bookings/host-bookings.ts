@@ -16,11 +16,18 @@ export class HostBookings implements OnInit {
   reservationSvc = inject(ReservationService);
   private modal = inject(ModalService);
   reservations = signal<Reservation[]>([]);
+  loading = signal(true);
 
   ngOnInit(): void {
     this.reservationSvc.getMyBookingsAsHost().subscribe({
-      next: (data) => this.reservations.set(data),
-      error: (err) => console.error('Error cargando reservas', err)
+      next: (data) => {
+        this.reservations.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error cargando reservas', err);
+        this.loading.set(false);
+      }
     });
   }
 
