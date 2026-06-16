@@ -109,6 +109,30 @@
   cursor: not-allowed;
 }
 
+.auth-btn__spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: auth-spin 0.7s linear infinite;
+}
+
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}
+
+.auth-error {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #e53935;
+  background: #fdecea;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
 .auth-btn--secondary {
   width: 100%;
   padding: 14px;

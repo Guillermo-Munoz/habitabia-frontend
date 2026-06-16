@@ -25,7 +25,17 @@
         }
       </div>
 
-      <button class="auth-btn" type="submit" [disabled]="loginForm.invalid">Entrar</button>
+      @if (loginError()) {
+        <p class="auth-error">{{ loginError() }}</p>
+      }
+
+      <button class="auth-btn" type="submit" [disabled]="loginForm.invalid || submitting()">
+        @if (submitting()) {
+          <span class="auth-btn__spinner"></span>
+        } @else {
+          Entrar
+        }
+      </button>
       <button class="auth-btn--secondary" type="button" routerLink="/register">¿No tienes cuenta? Regístrate</button>
 
     </form>
