@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://habitia.com',
+    apiUrl: 'https://habitabia-backend.onrender.com',
 }
