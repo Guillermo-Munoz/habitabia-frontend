@@ -50,8 +50,3 @@ export class Login {
     return this.router.navigate(['/register']);
   }
 }
- register(){
-    return this.router.navigate(['/register']);
-  }
-
-}
